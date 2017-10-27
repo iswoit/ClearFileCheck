@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Xml;
+using System.IO;
 
 namespace ClearfileCheckManager
 {
@@ -17,24 +18,73 @@ namespace ClearfileCheckManager
         /// </summary>
         public Manager()
         {
-            _fileSourceList.Clear();
+            // 清空行情源
+            _fileSourceList = new List<FileSource>();
 
+            // 判断配置文件是否存在，不存在抛出异常
+            if (!File.Exists(Path.Combine(Environment.CurrentDirectory, "cfg.xml")))
+                throw new Exception("未能找到配置文件cfg.xml，请重新配置该文件后重启程序!");
+
+            // 读取文件
             XmlDocument doc = new XmlDocument();
-            doc.Load("cfg.xml");
-            XmlNode xn = doc.SelectSingleNode("sources");   // 根节点
+            XmlReaderSettings settings = new XmlReaderSettings();
+            settings.IgnoreComments = true;     //忽略文档里面的注释
+            XmlReader reader = XmlReader.Create(@"cfg.xml", settings);
+            doc.Load(reader);
 
+            // 根据配置文件，生成对象
+            XmlNode rootNode = doc.SelectSingleNode("sources");   // 根节点
+            if (rootNode == null)
+                throw new Exception("无法找到配置文件的根节点<sources>，请检查配置文件格式是否正确!");
 
-            XmlNodeList xnl = xn.ChildNodes;
-            foreach (XmlNode xn1 in xnl)
+            foreach (XmlNode tmpXnl in rootNode.ChildNodes)     // 遍历每一个子节点
             {
-                if (xn1.Name.ToLower() == "file_source")
+                if (tmpXnl.Name.ToLower().Trim() == "file_source")  // 只能是file_source节点
                 {
+                    string enable = string.Empty;
+                    string name = string.Empty;
+                    string originPath = string.Empty;
+                    string destPath = string.Empty;
+                    string flagFiles = string.Empty;
+                    string filePattern = string.Empty;
 
-                    XmlElement xe = (XmlElement)xn1;
 
-                    FileSource tmpFileSource = new FileSource(xe.GetAttribute("enable").ToString(), xe.ChildNodes[0].InnerText, xe.ChildNodes[1].InnerText, xe.ChildNodes[2].InnerText, xe.ChildNodes[3].InnerText, xe.ChildNodes[4].InnerText);
+                    XmlElement xe = (XmlElement)tmpXnl;
+                    enable = xe.GetAttribute("enable");     // 启用标志（只要不是enable="false"，都算启用）
+                    for (int i = 0; i < xe.ChildNodes.Count; i++)
+                    {
+                        switch (xe.ChildNodes[i].Name.ToLower().Trim())
+                        {
+                            case "name":
+                                name = xe.ChildNodes[i].InnerText;
+                                break;
+                            case "origin_path":
+                                originPath = xe.ChildNodes[i].InnerText;
+                                break;
+                            case "dest_path":
+                                destPath = xe.ChildNodes[i].InnerText;
+                                break;
+                            case "flag_files":
+                                flagFiles = xe.ChildNodes[i].InnerText;
+                                break;
+                            case "file_pattern":
+                                filePattern = xe.ChildNodes[i].InnerText;
+                                break;
+                        }
+                    }
+
+
+                    // 生成对象
+                    FileSource tmpFileSource = new FileSource(
+                        enable,
+                        name,
+                        originPath.Trim(),
+                        destPath.Trim(),
+                        flagFiles.Trim(),
+                        filePattern.Trim());
+
+                    // 对象加入列表
                     _fileSourceList.Add(tmpFileSource);
-
                 }
             }
 

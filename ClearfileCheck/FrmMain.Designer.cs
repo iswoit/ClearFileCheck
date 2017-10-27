@@ -33,6 +33,7 @@
             this.btnExecute = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.lvFile = new System.Windows.Forms.ListView();
+            this.clmHead1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmHead0 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmHead3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmHead4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -45,15 +46,14 @@
             this.label5 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.bgWorker = new System.ComponentModel.BackgroundWorker();
-            this.clmHead1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.lvStatus = new ClearfileCheckManager.DoubleBufferListView();
-            this.文件源 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.进度 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.是否收齐 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.异常信息 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.label4 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.label7 = new System.Windows.Forms.Label();
+            this.lvStatus = new ClearfileCheckManager.DoubleBufferListView();
+            this.文件源 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.状态 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.进度 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.是否收齐 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -92,9 +92,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(359, 9);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(65, 12);
+            this.label2.Size = new System.Drawing.Size(89, 12);
             this.label2.TabIndex = 4;
-            this.label2.Text = "文件列表：";
+            this.label2.Text = "问题文件列表：";
             // 
             // lvFile
             // 
@@ -111,6 +111,10 @@
             this.lvFile.TabIndex = 7;
             this.lvFile.UseCompatibleStateImageBehavior = false;
             this.lvFile.View = System.Windows.Forms.View.Details;
+            // 
+            // clmHead1
+            // 
+            this.clmHead1.Text = "文件源";
             // 
             // clmHead0
             // 
@@ -213,43 +217,6 @@
             this.bgWorker.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bgWorker_ProgressChanged);
             this.bgWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bgWorker_RunWorkerCompleted);
             // 
-            // clmHead1
-            // 
-            this.clmHead1.Text = "文件源";
-            // 
-            // lvStatus
-            // 
-            this.lvStatus.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.文件源,
-            this.进度,
-            this.是否收齐,
-            this.异常信息});
-            this.lvStatus.FullRowSelect = true;
-            this.lvStatus.GridLines = true;
-            this.lvStatus.Location = new System.Drawing.Point(12, 24);
-            this.lvStatus.Name = "lvStatus";
-            this.lvStatus.Size = new System.Drawing.Size(316, 304);
-            this.lvStatus.TabIndex = 19;
-            this.lvStatus.UseCompatibleStateImageBehavior = false;
-            this.lvStatus.View = System.Windows.Forms.View.Details;
-            // 
-            // 文件源
-            // 
-            this.文件源.Text = "文件源";
-            this.文件源.Width = 80;
-            // 
-            // 进度
-            // 
-            this.进度.Text = "进度";
-            // 
-            // 是否收齐
-            // 
-            this.是否收齐.Text = "是否收齐";
-            // 
-            // 异常信息
-            // 
-            this.异常信息.Text = "异常信息";
-            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -277,11 +244,45 @@
             this.label7.TabIndex = 24;
             this.label7.Text = "18:00:00";
             // 
+            // lvStatus
+            // 
+            this.lvStatus.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+            this.文件源,
+            this.状态,
+            this.进度,
+            this.是否收齐});
+            this.lvStatus.FullRowSelect = true;
+            this.lvStatus.GridLines = true;
+            this.lvStatus.Location = new System.Drawing.Point(12, 24);
+            this.lvStatus.Name = "lvStatus";
+            this.lvStatus.Size = new System.Drawing.Size(316, 304);
+            this.lvStatus.TabIndex = 19;
+            this.lvStatus.UseCompatibleStateImageBehavior = false;
+            this.lvStatus.View = System.Windows.Forms.View.Details;
+            // 
+            // 文件源
+            // 
+            this.文件源.Text = "文件源";
+            this.文件源.Width = 80;
+            // 
+            // 状态
+            // 
+            this.状态.Text = "状态";
+            this.状态.Width = 100;
+            // 
+            // 进度
+            // 
+            this.进度.Text = "进度";
+            // 
+            // 是否收齐
+            // 
+            this.是否收齐.Text = "是否收齐";
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(826, 503);
+            this.ClientSize = new System.Drawing.Size(916, 518);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label4);
@@ -329,11 +330,11 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.ComponentModel.BackgroundWorker bgWorker;
-        private System.Windows.Forms.ColumnHeader 异常信息;
         private System.Windows.Forms.ColumnHeader clmHead1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ColumnHeader 状态;
     }
 }
 

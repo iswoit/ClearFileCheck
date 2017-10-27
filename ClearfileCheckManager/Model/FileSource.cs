@@ -5,11 +5,27 @@ using System.IO;
 
 namespace ClearfileCheckManager
 {
+    public enum FileSourceStatus
+    {
+        禁用 = 0,
+        未开始 = 1,
+        路径无法访问 = 2,
+        标志文件未收齐 = 3,
+        标志文件已收齐 = 4,
+        正在获取文件列表 = 5,
+        文件列表获取完成 = 6,
+        文件复制中 = 7,
+        文件复制完成 = 8,
+        文件检查通过 = 9,
+        有文件不一致 = 10
+    }
+
     /// <summary>
     /// 拷贝项目
     /// </summary>
     public class FileSource
     {
+        private FileSourceStatus _status;       // 当前状态标志
         private bool _enable;                   // 是否启用
         private string _name;                   // 对应来源名称
         private string _originPath;             // 源路径
@@ -26,7 +42,10 @@ namespace ClearfileCheckManager
 
         public FileSource(string enable, string name, string originPath, string destPath, string flagFiles, string filePattern)
         {
-            _enable = bool.Parse(enable);
+            // 配置是否启用（只有false是禁止，其他都是默认启用）
+            bool convertResult = bool.TryParse(enable, out _enable);
+            if (convertResult == false)
+                _enable = true;
             _name = name;
             _originPath = originPath;
             _destPath = destPath;
@@ -44,9 +63,21 @@ namespace ClearfileCheckManager
 
             _isFileListAcquired = false;
             _clearFiles = new List<ClearFile>();
+
+            if (Enable == false)
+                Status = FileSourceStatus.禁用;
+            else
+                Status = FileSourceStatus.未开始;
         }
 
         #region 属性
+
+        public FileSourceStatus Status
+        {
+            get { return _status; }
+            set { _status = value; }
+        }
+
         public bool Enable
         {
             get { return _enable; }
@@ -136,6 +167,25 @@ namespace ClearfileCheckManager
                         cnt++;
                 }
                 return cnt;
+            }
+        }
+
+
+        // 判断所有文件是否拷贝完
+        public bool IsAllFilesCopied
+        {
+            get
+            {
+                if (Enable == false)
+                    return false;
+
+                if (IsFlagFilesAllArrived == false)
+                    return false;
+
+                if (IsFileListAcquired == false)
+                    return false;
+
+                return TotalFileCount == CopiedFileCount;
             }
         }
 

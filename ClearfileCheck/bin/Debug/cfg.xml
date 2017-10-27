@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="GBK"?>
 <sources>
+	<!--样例-->
 	<file_source enable="false">
 		<name>上交所</name>
 		<origin_path>\\10.32.0.133\dd\rptfile\YYYYMMDD\</origin_path>
