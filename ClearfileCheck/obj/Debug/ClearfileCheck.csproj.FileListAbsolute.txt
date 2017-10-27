@@ -6,3 +6,5 @@ D:\Codes\C#\ClearfileCheck\ClearfileCheck\obj\Debug\ClearfileCheck.Properties.Re
 D:\Codes\C#\ClearfileCheck\ClearfileCheck\obj\Debug\ClearfileCheck.csproj.GenerateResource.Cache
 D:\Codes\C#\ClearfileCheck\ClearfileCheck\obj\Debug\ClearfileCheck.exe
 D:\Codes\C#\ClearfileCheck\ClearfileCheck\obj\Debug\ClearfileCheck.pdb
+D:\Codes\C#\ClearfileCheck\ClearfileCheck\bin\Debug\ClearfileCheckManager.dll
+D:\Codes\C#\ClearfileCheck\ClearfileCheck\bin\Debug\ClearfileCheckManager.pdb

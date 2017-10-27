@@ -15,22 +15,35 @@ namespace ClearfileCheckManager
         private string _originPath;             // 源路径
         private string _destPath;               // 清算机路径
         private List<string> _flagFilesList;    // 标志文件列表
-        private bool _isFlagFilesAllArrived;    // 所有标志文件是否已就绪
-        private bool _isFileListAcquired;       // 清算文件列表是否已获取
-        
+        private List<string> _filePattern;      // 文件样式
 
-        public FileSource(string enable, string name, string originPath, string destPath, string flagFiles)
+        private bool _isFlagFilesAllArrived;    // 所有标志文件是否已就绪
+        private List<string> _flagFilesMissingList;     // 还缺失的标志文件列表
+
+        private bool _isFileListAcquired;       // 清算文件列表是否已获取
+        private List<ClearFile> _clearFiles;    // 清算文件列表
+
+
+        public FileSource(string enable, string name, string originPath, string destPath, string flagFiles, string filePattern)
         {
             _enable = bool.Parse(enable);
             _name = name;
             _originPath = originPath;
             _destPath = destPath;
 
-            string[] arr_flagfiles = flagFiles.Split(new char[';']);
+            string[] arr_flagfiles = flagFiles.Split(new char[] { ';', '|' });
             _flagFilesList = new List<string>();
             _flagFilesList.AddRange(arr_flagfiles);
 
+            string[] arr_file_pattern = filePattern.Split(new char[] { ';' });
+            _filePattern = new List<string>();
+            _filePattern.AddRange(arr_file_pattern);
+
             _isFlagFilesAllArrived = false;
+            _flagFilesMissingList = new List<string>();
+
+            _isFileListAcquired = false;
+            _clearFiles = new List<ClearFile>();
         }
 
         #region 属性
@@ -64,11 +77,68 @@ namespace ClearfileCheckManager
             set { _flagFilesList = value; }
         }
 
+
+        public List<string> FilePattern
+        {
+            get { return _filePattern; }
+            set { _filePattern = value; }
+        }
+
         public bool IsFlagFilesAllArrived
         {
             get { return _isFlagFilesAllArrived; }
             set { _isFlagFilesAllArrived = value; }
         }
+
+        public List<string> FlagFilesMissingList
+        {
+            get { return _flagFilesMissingList; }
+            set { _flagFilesMissingList = value; }
+        }
+
+        public bool IsFileListAcquired
+        {
+            get { return _isFileListAcquired; }
+            set { _isFileListAcquired = value; }
+        }
+
+
+        public List<ClearFile> ClearFiles
+        {
+            get { return _clearFiles; }
+            set { _clearFiles = value; }
+        }
+
+        // 获取文件总数
+        public int TotalFileCount
+        {
+            get
+            {
+                if (_clearFiles == null)
+                    return 0;
+
+                return _clearFiles.Count;
+            }
+        }
+
+        // 获取已拷贝数
+        public int CopiedFileCount
+        {
+            get
+            {
+                if (_clearFiles == null)
+                    return 0;
+
+                int cnt = 0;
+                foreach (ClearFile tmpFile in _clearFiles)
+                {
+                    if (tmpFile.IsCopied == true)
+                        cnt++;
+                }
+                return cnt;
+            }
+        }
+
         #endregion 属性
 
 

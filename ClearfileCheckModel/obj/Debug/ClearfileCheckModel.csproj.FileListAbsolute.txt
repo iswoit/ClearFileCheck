@@ -1,7 +1,0 @@
-D:\Codes\C#\ClearfileCheck\ClearfileCheckModel\bin\Debug\ClearfileCheckModel.dll
-D:\Codes\C#\ClearfileCheck\ClearfileCheckModel\bin\Debug\ClearfileCheckModel.pdb
-D:\Codes\C#\ClearfileCheck\ClearfileCheckModel\obj\Debug\ClearfileCheckModel.csprojResolveAssemblyReference.cache
-D:\Codes\C#\ClearfileCheck\ClearfileCheckModel\obj\Debug\ClearfileCheckModel.dll
-D:\Codes\C#\ClearfileCheck\ClearfileCheckModel\obj\Debug\ClearfileCheckModel.pdb
-D:\Codes\C#\ClearfileCheck\ClearfileCheckModel\bin\Debug\ClearfileCheckUtil.dll
-D:\Codes\C#\ClearfileCheck\ClearfileCheckModel\bin\Debug\ClearfileCheckUtil.pdb
