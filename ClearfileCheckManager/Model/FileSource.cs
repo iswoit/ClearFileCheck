@@ -16,8 +16,8 @@ namespace ClearfileCheckManager
         文件列表获取完成 = 6,
         文件复制中 = 7,
         文件复制完成 = 8,
-        文件检查通过 = 9,
-        有文件不一致 = 10
+        文件检查开始 = 9,
+        文件检查结束 = 10
     }
 
     /// <summary>
@@ -50,13 +50,23 @@ namespace ClearfileCheckManager
             _originPath = originPath;
             _destPath = destPath;
 
+            // 标志文件特征
             string[] arr_flagfiles = flagFiles.Split(new char[] { ';', '|' });
             _flagFilesList = new List<string>();
-            _flagFilesList.AddRange(arr_flagfiles);
+            foreach(string strTmp in arr_flagfiles)
+            {
+                if (!string.IsNullOrEmpty(strTmp.Trim()))
+                    _flagFilesList.Add(strTmp.Trim());
+            }
 
-            string[] arr_file_pattern = filePattern.Split(new char[] { ';' });
+            // 清算文件特征
+            string[] arr_file_pattern = filePattern.Split(new char[] { ';', '|' });
             _filePattern = new List<string>();
-            _filePattern.AddRange(arr_file_pattern);
+            foreach(string strTmp in arr_file_pattern)
+            {
+                if (!string.IsNullOrEmpty(strTmp.Trim()))
+                    _filePattern.Add(strTmp.Trim());
+            }
 
             _isFlagFilesAllArrived = false;
             _flagFilesMissingList = new List<string>();

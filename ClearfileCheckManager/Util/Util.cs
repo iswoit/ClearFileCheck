@@ -15,18 +15,37 @@ namespace ClearfileCheckManager
         }
 
         /// <summary>
-        /// 将mdd替换成当天(现在只写了mdd)
+        /// 将mmdd，mdd替换成当天
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
         public static string Filename_Date_Convert(string fileName)
         {
-            DateTime dtNow = DateTime.Now;
-            
-            string replacement = String.Format("{0}{1}", arr_mdd_convert[dtNow.Month - 1], dtNow.Day.ToString().PadLeft(2, '0'));
+            string strTmp = fileName;
 
-            string strReturn = Regex.Replace(fileName, "mdd", replacement, RegexOptions.IgnoreCase);
-            return strReturn;
+            DateTime dtNow = DateTime.Now;
+
+            string mmdd_replacement = string.Format("{0}{1}", dtNow.Month.ToString().PadLeft(2, '0'), dtNow.Day.ToString().PadLeft(2, '0'));
+            string mdd_replacement = String.Format("{0}{1}", arr_mdd_convert[dtNow.Month - 1], dtNow.Day.ToString().PadLeft(2, '0'));
+
+            strTmp = Regex.Replace(strTmp, "mmdd", mmdd_replacement, RegexOptions.IgnoreCase); // 1.先替换mmdd
+            strTmp = Regex.Replace(strTmp, "mdd", mdd_replacement, RegexOptions.IgnoreCase);   // 2.再替换mdd
+            return strTmp;
+        }
+
+
+        /// <summary>
+        /// 文件名里是否有日期通配符
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public static bool Filename_Contain_DatePattern(string fileName)
+        {
+
+            if (Regex.IsMatch(fileName, "mmdd", RegexOptions.IgnoreCase) || Regex.IsMatch(fileName, "mdd", RegexOptions.IgnoreCase))
+                return true;
+            else
+                return false;
         }
 
 
@@ -48,7 +67,7 @@ namespace ClearfileCheckManager
             }
             catch (Exception ex)
             {
-                throw new Exception("GetMD5HashFromFile() fail, error:" +ex.Message);
+                throw new Exception("GetMD5HashFromFile() fail, error:" + ex.Message);
             }
         }
     }

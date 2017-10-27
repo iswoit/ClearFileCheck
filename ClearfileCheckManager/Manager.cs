@@ -83,6 +83,10 @@ namespace ClearfileCheckManager
                         flagFiles.Trim(),
                         filePattern.Trim());
 
+                    // 创建目标路径
+                    if (!Directory.Exists(destPath.Trim()))
+                        Directory.CreateDirectory(destPath.Trim());
+
                     // 对象加入列表
                     _fileSourceList.Add(tmpFileSource);
                 }
