@@ -1,0 +1,10 @@
+D:\Codes\C#\ClearfileCheck\ClearfileCheck\bin\Release\ClearfileCheck.exe
+D:\Codes\C#\ClearfileCheck\ClearfileCheck\bin\Release\ClearfileCheck.pdb
+D:\Codes\C#\ClearfileCheck\ClearfileCheck\bin\Release\ClearfileCheckManager.dll
+D:\Codes\C#\ClearfileCheck\ClearfileCheck\bin\Release\ClearfileCheckManager.pdb
+D:\Codes\C#\ClearfileCheck\ClearfileCheck\obj\Release\ClearfileCheck.csprojResolveAssemblyReference.cache
+D:\Codes\C#\ClearfileCheck\ClearfileCheck\obj\Release\ClearfileCheck.FrmMain.resources
+D:\Codes\C#\ClearfileCheck\ClearfileCheck\obj\Release\ClearfileCheck.Properties.Resources.resources
+D:\Codes\C#\ClearfileCheck\ClearfileCheck\obj\Release\ClearfileCheck.csproj.GenerateResource.Cache
+D:\Codes\C#\ClearfileCheck\ClearfileCheck\obj\Release\ClearfileCheck.exe
+D:\Codes\C#\ClearfileCheck\ClearfileCheck\obj\Release\ClearfileCheck.pdb

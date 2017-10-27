@@ -8,6 +8,9 @@ namespace ClearfileCheckManager
     public class Manager
     {
         private List<FileSource> _fileSourceList = new List<FileSource>();  // 文件源列表
+        private DateTime? _lastCheckTime;
+        private DateTime? _nextCheckTime;
+        private int _checkMinuteSpan;       // 检查间隔
 
         /// <summary>
         /// 构造函数
@@ -44,6 +47,25 @@ namespace ClearfileCheckManager
             get { return _fileSourceList; }
             set { _fileSourceList = value; }
         }
+
+        public DateTime? LastCheckTime
+        {
+            get { return _lastCheckTime; }
+            set { _lastCheckTime = value; }
+        }
+
+        public DateTime? NextCheckTime
+        {
+            get { return _nextCheckTime; }
+            set { _nextCheckTime = value; }
+        }
+
+        public int CheckMinuteSpan
+        {
+            get { return _checkMinuteSpan; }
+            set { _checkMinuteSpan = value; }
+        }
+
         #endregion
 
     }

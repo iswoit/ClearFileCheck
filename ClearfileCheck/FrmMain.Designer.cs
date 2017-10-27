@@ -51,6 +51,9 @@
             this.进度 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.是否收齐 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.异常信息 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.label4 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -76,7 +79,7 @@
             // 
             // btnExecute
             // 
-            this.btnExecute.Location = new System.Drawing.Point(715, 450);
+            this.btnExecute.Location = new System.Drawing.Point(715, 436);
             this.btnExecute.Name = "btnExecute";
             this.btnExecute.Size = new System.Drawing.Size(75, 27);
             this.btnExecute.TabIndex = 3;
@@ -129,15 +132,15 @@
             // lbStatus
             // 
             this.lbStatus.AutoSize = true;
-            this.lbStatus.Location = new System.Drawing.Point(592, 457);
+            this.lbStatus.Location = new System.Drawing.Point(592, 443);
             this.lbStatus.Name = "lbStatus";
-            this.lbStatus.Size = new System.Drawing.Size(95, 12);
+            this.lbStatus.Size = new System.Drawing.Size(53, 12);
             this.lbStatus.TabIndex = 8;
-            this.lbStatus.Text = "状态：检查中...";
+            this.lbStatus.Text = "停止运行";
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(361, 441);
+            this.numericUpDown1.Location = new System.Drawing.Point(334, 441);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(37, 21);
             this.numericUpDown1.TabIndex = 14;
@@ -150,7 +153,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(290, 443);
+            this.label3.Location = new System.Drawing.Point(263, 443);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(65, 12);
             this.label3.TabIndex = 15;
@@ -159,7 +162,7 @@
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(404, 443);
+            this.label9.Location = new System.Drawing.Point(377, 443);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(29, 12);
             this.label9.TabIndex = 16;
@@ -168,16 +171,16 @@
             // label10
             // 
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(29, 450);
+            this.label10.Location = new System.Drawing.Point(28, 443);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(125, 12);
+            this.label10.Size = new System.Drawing.Size(101, 12);
             this.label10.TabIndex = 17;
-            this.label10.Text = "上一次检查完成时间：";
+            this.label10.Text = "上一次拷贝时间：";
             // 
             // label11
             // 
             this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(149, 450);
+            this.label11.Location = new System.Drawing.Point(135, 443);
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(53, 12);
             this.label11.TabIndex = 18;
@@ -195,7 +198,7 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(292, 468);
+            this.checkBox1.Location = new System.Drawing.Point(265, 467);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(144, 16);
             this.checkBox1.TabIndex = 21;
@@ -247,11 +250,41 @@
             // 
             this.异常信息.Text = "异常信息";
             // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(545, 443);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(41, 12);
+            this.label4.TabIndex = 22;
+            this.label4.Text = "状态：";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(28, 468);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(101, 12);
+            this.label6.TabIndex = 23;
+            this.label6.Text = "下一次拷贝时间：";
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(135, 468);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(53, 12);
+            this.label7.TabIndex = 24;
+            this.label7.Text = "18:00:00";
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(826, 503);
+            this.Controls.Add(this.label7);
+            this.Controls.Add(this.label6);
+            this.Controls.Add(this.label4);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.lvStatus);
@@ -298,6 +331,9 @@
         private System.ComponentModel.BackgroundWorker bgWorker;
         private System.Windows.Forms.ColumnHeader 异常信息;
         private System.Windows.Forms.ColumnHeader clmHead1;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.Label label7;
     }
 }
 

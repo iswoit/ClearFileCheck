@@ -66,8 +66,16 @@ namespace ClearfileCheck
              */
 
             lbStatus.Text = "执行中...";
-
-            bgWorker.RunWorkerAsync();
+            btnExecute.Text = "点击停止";
+            if(!bgWorker.IsBusy)
+            {
+                bgWorker.RunWorkerAsync();
+            }
+            else
+            {
+                bgWorker.CancelAsync();
+            }
+            
         }
 
 
@@ -80,7 +88,7 @@ namespace ClearfileCheck
             {
                 FileSource tmpFileSource = (FileSource)tmpLVI.Tag;
                 tmpLVI.SubItems[1].Text = string.Format("{0}/{1}", tmpFileSource.CopiedFileCount, tmpFileSource.TotalFileCount);
-                tmpLVI.SubItems[2].Text = tmpFileSource.CopiedFileCount == tmpFileSource.TotalFileCount ? "是" : "否";
+                tmpLVI.SubItems[2].Text = tmpFileSource.CopiedFileCount == tmpFileSource.TotalFileCount ? "√" : "×";
             }
             lvStatus.EndUpdate();
 
@@ -96,21 +104,21 @@ namespace ClearfileCheck
                 {
                     ListViewItem lvi = new ListViewItem(tmpFileSource.Name);
                     lvi.SubItems.Add(tmpClearFile.FileName);
-                    lvi.SubItems.Add(tmpClearFile.IsCopied ? "是" : "否");
+                    lvi.SubItems.Add(tmpClearFile.IsCopied ? "√" : "×");
 
                     string md5Result = "";
                     if (tmpClearFile.IsMD5Equal.HasValue)
                     {
                         if (tmpClearFile.IsMD5Equal.Value == true)
-                            md5Result = "是";
+                            md5Result = "√";
                         else
-                            md5Result = "否";
+                            md5Result = "×";
                     }
                     lvi.SubItems.Add(md5Result);
 
                     if (!(tmpClearFile.IsCopied == true && tmpClearFile.IsMD5Equal.HasValue == true && tmpClearFile.IsMD5Equal.Value == true))
                     {
-                        lvi.BackColor = Color.Pink;
+                        lvi.BackColor = Color.OrangeRed;
                     }
 
                     lvFile.Items.Add(lvi);
@@ -190,9 +198,16 @@ namespace ClearfileCheck
                         bgWorker.ReportProgress(1);
                         Thread.Sleep(10);
                     }
+                
 
-
+                    if (bgWorker.CancellationPending)   // 取消按钮，这个要换个位置
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
                 }
+
+                
             }
 
             // 5.文件判断MD5
@@ -231,9 +246,22 @@ namespace ClearfileCheck
 
         private void bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            lbStatus.Text = "执行完成";
-            UpdateFileSourceInfo();
-            UpdateFileListInfo();
+            if (e.Error != null)
+            {
+                MessageBox.Show("Error");
+            }
+            else if (e.Cancelled)
+            {
+                MessageBox.Show("Canceled");
+            }
+            else
+            {
+                lbStatus.Text = "执行完成";
+                UpdateFileSourceInfo();
+                UpdateFileListInfo();
+            }
+
+            btnExecute.Text = "执行";
         }
         #endregion
 
