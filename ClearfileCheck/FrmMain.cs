@@ -47,11 +47,10 @@ namespace ClearfileCheck
         private void btnExecute_Click(object sender, EventArgs e)
         {
             /* 1.循环FileSource列表
-             * 2.每一个FileSource，首先
-             * 
-             * 
-             * 
-             * 
+             * 2.每一个FileSource，判断所有标志文件是否盗取
+             * 3.如果到齐，判断是否已经拉取文件列表
+             * 4.如果已拉取，则逐个ClearFile对象判断。判断目标路径是否存在，以及源及目的文件md5文件是否一致
+             * 5.如果没有拉取，先拉取表格，再重复步骤4
              * 
              */
         }
