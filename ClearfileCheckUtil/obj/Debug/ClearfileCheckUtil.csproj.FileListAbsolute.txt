@@ -1,0 +1,5 @@
+D:\Codes\C#\ClearfileCheck\ClearfileCheckUtil\obj\Debug\ClearfileCheckUtil.csprojResolveAssemblyReference.cache
+D:\Codes\C#\ClearfileCheck\ClearfileCheckUtil\bin\Debug\ClearfileCheckUtil.dll
+D:\Codes\C#\ClearfileCheck\ClearfileCheckUtil\bin\Debug\ClearfileCheckUtil.pdb
+D:\Codes\C#\ClearfileCheck\ClearfileCheckUtil\obj\Debug\ClearfileCheckUtil.dll
+D:\Codes\C#\ClearfileCheck\ClearfileCheckUtil\obj\Debug\ClearfileCheckUtil.pdb

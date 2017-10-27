@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="GBK"?>
+<sources>
+	<file_source enable="false">
+		<name>上交所</name>
+		<origin_path>\\10.32.0.133\dd\rptfile\YYYYMMDD\</origin_path>
+		<dest_path>D:\qsfile\zqqs\sh\</dest_path>
+		<flag_files></flag_files>
+	</file_source>
+	<file_source enable="true">
+		<name>中登上海</name>
+		<origin_path>\\10.32.0.133\dd\HFXN\QSK\xyfile\</origin_path>
+		<dest_path>D:\qsfile\zqqs\sh\</dest_path>
+		<flag_files>fsbz_a.mdd;fsbz_arjq.mdd;fsbz_b.mdd;fsbz_brjq.mdd;fsbz_dz.mdd;fsbz_op.mdd;fsbz_hk.mdd;fsbz_a2.mdd;fsbz_b2.mdd;fsbz_hkrjq.mdd</flag_files>
+	</file_source>
+	<file_source enable="false">
+		<name>中登深圳</name>
+		<origin_path>\\10.32.0.133\dd\rptfile\YYYYMMDD\</origin_path>
+		<dest_path>D:\qsfile\zqqs\sh\</dest_path>
+		<flag_files></flag_files>
+	</file_source>
+	<file_source enable="false">
+		<name>股转</name>
+		<origin_path>\\10.32.0.133\dd\rptfile\YYYYMMDD\</origin_path>
+		<dest_path>D:\qsfile\zqqs\sh\</dest_path>
+		<flag_files></flag_files>
+	</file_source>
+	<file_source enable="false">
+		<name>北交所</name>
+		<origin_path>\\10.32.0.133\dd\rptfile\YYYYMMDD\</origin_path>
+		<dest_path>D:\qsfile\zqqs\sh\</dest_path>
+		<flag_files></flag_files>
+	</file_source>
+	<file_source enable="false">
+		<name>中登账户</name>
+		<origin_path>\\10.32.0.133\dd\rptfile\YYYYMMDD\</origin_path>
+		<dest_path>D:\qsfile\zqqs\sh\</dest_path>
+		<flag_files></flag_files>
+	</file_source>
+	<file_source enable="false">
+		<name>TA多金</name>
+		<origin_path>\\10.32.0.133\dd\rptfile\YYYYMMDD\</origin_path>
+		<dest_path>D:\qsfile\zqqs\sh\</dest_path>
+		<flag_files></flag_files>
+	</file_source>
+</sources>
