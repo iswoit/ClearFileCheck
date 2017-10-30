@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6C5F52EC-1EC8-4320-BD5F-99583CDBF444}</ProjectGuid>
+    <ProjectGuid>{42FC5982-2925-4B84-AB26-D1B5B19D6DDD}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ClearfileCheckModel</RootNamespace>
-    <AssemblyName>ClearfileCheckModel</AssemblyName>
+    <RootNamespace>ClearfileCheckManager</RootNamespace>
+    <AssemblyName>ClearfileCheckManager</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -35,8 +35,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ClearFile.cs" />
-    <Compile Include="FileSource.cs" />
+    <Compile Include="Model\ClearFile.cs" />
+    <Compile Include="Model\FileSource.cs" />
+    <Compile Include="Util.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
