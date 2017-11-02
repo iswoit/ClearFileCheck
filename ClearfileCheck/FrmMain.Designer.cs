@@ -38,17 +38,17 @@
             this.clmHead0 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmHead4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lbStatus = new System.Windows.Forms.Label();
-            this.numChkTimeSpan = new System.Windows.Forms.NumericUpDown();
+            this.numSecSpan = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
             this.label10 = new System.Windows.Forms.Label();
-            this.label11 = new System.Windows.Forms.Label();
+            this.lbLastExecuteTime = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.bgWorker = new System.ComponentModel.BackgroundWorker();
             this.label4 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
+            this.lbNextExecuteTime = new System.Windows.Forms.Label();
             this.timerExecute = new System.Windows.Forms.Timer(this.components);
             this.lvStatus = new ClearfileCheckManager.DoubleBufferListView();
             this.文件源 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -57,7 +57,8 @@
             this.状态 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.进度 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.是否收齐 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            ((System.ComponentModel.ISupportInitialize)(this.numChkTimeSpan)).BeginInit();
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            ((System.ComponentModel.ISupportInitialize)(this.numSecSpan)).BeginInit();
             this.SuspendLayout();
             // 
             // tbError
@@ -86,7 +87,7 @@
             this.btnExecute.Name = "btnExecute";
             this.btnExecute.Size = new System.Drawing.Size(75, 27);
             this.btnExecute.TabIndex = 3;
-            this.btnExecute.Text = "执行";
+            this.btnExecute.Text = "执行(&X)";
             this.btnExecute.UseVisualStyleBackColor = true;
             this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
             // 
@@ -104,7 +105,8 @@
             this.lvFile.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.clmHead1,
             this.clmHead0,
-            this.clmHead4});
+            this.clmHead4,
+            this.columnHeader3});
             this.lvFile.FullRowSelect = true;
             this.lvFile.GridLines = true;
             this.lvFile.Location = new System.Drawing.Point(12, 209);
@@ -125,7 +127,7 @@
             // 
             // clmHead4
             // 
-            this.clmHead4.Text = "两边文件是否一致";
+            this.clmHead4.Text = "两边文件不一致";
             this.clmHead4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.clmHead4.Width = 120;
             // 
@@ -138,24 +140,24 @@
             this.lbStatus.TabIndex = 8;
             this.lbStatus.Text = "停止运行";
             // 
-            // numChkTimeSpan
+            // numSecSpan
             // 
-            this.numChkTimeSpan.Location = new System.Drawing.Point(812, 315);
-            this.numChkTimeSpan.Maximum = new decimal(new int[] {
-            60,
+            this.numSecSpan.Location = new System.Drawing.Point(812, 315);
+            this.numSecSpan.Maximum = new decimal(new int[] {
+            600,
             0,
             0,
             0});
-            this.numChkTimeSpan.Minimum = new decimal(new int[] {
+            this.numSecSpan.Minimum = new decimal(new int[] {
             1,
             0,
             0,
             0});
-            this.numChkTimeSpan.Name = "numChkTimeSpan";
-            this.numChkTimeSpan.Size = new System.Drawing.Size(37, 21);
-            this.numChkTimeSpan.TabIndex = 14;
-            this.numChkTimeSpan.Value = new decimal(new int[] {
-            1,
+            this.numSecSpan.Name = "numSecSpan";
+            this.numSecSpan.Size = new System.Drawing.Size(37, 21);
+            this.numSecSpan.TabIndex = 14;
+            this.numSecSpan.Value = new decimal(new int[] {
+            20,
             0,
             0,
             0});
@@ -174,9 +176,9 @@
             this.label9.AutoSize = true;
             this.label9.Location = new System.Drawing.Point(855, 317);
             this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(29, 12);
+            this.label9.Size = new System.Drawing.Size(17, 12);
             this.label9.TabIndex = 16;
-            this.label9.Text = "分钟";
+            this.label9.Text = "秒";
             // 
             // label10
             // 
@@ -187,14 +189,14 @@
             this.label10.TabIndex = 17;
             this.label10.Text = "上一次拷贝时间：";
             // 
-            // label11
+            // lbLastExecuteTime
             // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(848, 391);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(53, 12);
-            this.label11.TabIndex = 18;
-            this.label11.Text = "18:00:00";
+            this.lbLastExecuteTime.AutoSize = true;
+            this.lbLastExecuteTime.Location = new System.Drawing.Point(848, 391);
+            this.lbLastExecuteTime.Name = "lbLastExecuteTime";
+            this.lbLastExecuteTime.Size = new System.Drawing.Size(23, 12);
+            this.lbLastExecuteTime.TabIndex = 18;
+            this.lbLastExecuteTime.Text = "N/A";
             // 
             // label5
             // 
@@ -241,14 +243,14 @@
             this.label6.TabIndex = 23;
             this.label6.Text = "下一次拷贝时间：";
             // 
-            // label7
+            // lbNextExecuteTime
             // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(848, 416);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(53, 12);
-            this.label7.TabIndex = 24;
-            this.label7.Text = "18:00:00";
+            this.lbNextExecuteTime.AutoSize = true;
+            this.lbNextExecuteTime.Location = new System.Drawing.Point(848, 416);
+            this.lbNextExecuteTime.Name = "lbNextExecuteTime";
+            this.lbNextExecuteTime.Size = new System.Drawing.Size(23, 12);
+            this.lbNextExecuteTime.TabIndex = 24;
+            this.lbNextExecuteTime.Text = "N/A";
             // 
             // timerExecute
             // 
@@ -301,22 +303,27 @@
             // 
             this.是否收齐.Text = "是否收齐";
             // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "文件日期不是当日";
+            this.columnHeader3.Width = 120;
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(916, 518);
-            this.Controls.Add(this.label7);
+            this.Controls.Add(this.lbNextExecuteTime);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.lvStatus);
-            this.Controls.Add(this.label11);
+            this.Controls.Add(this.lbLastExecuteTime);
             this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.numChkTimeSpan);
+            this.Controls.Add(this.numSecSpan);
             this.Controls.Add(this.lbStatus);
             this.Controls.Add(this.lvFile);
             this.Controls.Add(this.label2);
@@ -325,7 +332,7 @@
             this.Controls.Add(this.tbError);
             this.Name = "FrmMain";
             this.Text = "清算文件拷贝";
-            ((System.ComponentModel.ISupportInitialize)(this.numChkTimeSpan)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numSecSpan)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -340,11 +347,11 @@
         private System.Windows.Forms.ColumnHeader clmHead0;
         private System.Windows.Forms.ColumnHeader clmHead4;
         private System.Windows.Forms.Label lbStatus;
-        private System.Windows.Forms.NumericUpDown numChkTimeSpan;
+        private System.Windows.Forms.NumericUpDown numSecSpan;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Label label11;
+        private System.Windows.Forms.Label lbLastExecuteTime;
         private ClearfileCheckManager.DoubleBufferListView lvStatus;
         private System.Windows.Forms.ColumnHeader 文件源;
         private System.Windows.Forms.ColumnHeader 进度;
@@ -355,11 +362,12 @@
         private System.Windows.Forms.ColumnHeader clmHead1;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lbNextExecuteTime;
         private System.Windows.Forms.ColumnHeader 状态;
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.Timer timerExecute;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
     }
 }
 

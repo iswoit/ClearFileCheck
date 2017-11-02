@@ -136,7 +136,7 @@ namespace ClearfileCheck
             {
                 foreach (ClearFile tmpClearFile in tmpFileSource.ClearFiles)
                 {
-                    if(tmpClearFile.IsMD5Equal==false)
+                    if (tmpClearFile.IsMD5Equal == false)
                     {
                         ListViewItem lvi = new ListViewItem(tmpFileSource.Name);
                         lvi.SubItems.Add(tmpClearFile.FileName);
@@ -158,8 +158,6 @@ namespace ClearfileCheck
 
                         lvFile.Items.Add(lvi);
                     }
-
-                    
 
 
                 }
@@ -360,6 +358,12 @@ namespace ClearfileCheck
             }
 
             btnExecute.Text = "执行";
+
+
+            // 计算下一次执行时间
+            DateTime dtNow = DateTime.Now;
+            lbLastExecuteTime.Text = dtNow.ToString("HH:mm:ss");
+            lbNextExecuteTime.Text = Util.GetNextExecuteTime(dtNow, Int32.Parse(numSecSpan.Value.ToString())).ToString("HH:mm:ss");
         }
         #endregion
 

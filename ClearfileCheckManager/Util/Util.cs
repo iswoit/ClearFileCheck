@@ -49,6 +49,11 @@ namespace ClearfileCheckManager
         }
 
 
+        /// <summary>
+        /// 获取文件md5码
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
         public static string GetMD5HashFromFile(string fileName)
         {
             try
@@ -69,6 +74,13 @@ namespace ClearfileCheckManager
             {
                 throw new Exception("GetMD5HashFromFile() fail, error:" + ex.Message);
             }
+        }
+
+
+        public static DateTime GetNextExecuteTime(DateTime dt,int secondSpan)
+        {
+            DateTime dtReturn = dt.AddSeconds(secondSpan);
+            return dtReturn;
         }
     }
 }
