@@ -29,11 +29,11 @@
 		<flag_files></flag_files>
 		<file_pattern></file_pattern>
 	</file_source>
-	<file_source enable="false">
+	<file_source>
 		<name>±±½»Ëù</name>
-		<origin_path>\\10.32.0.133\dd\rptfile\YYYYMMDD\</origin_path>
-		<dest_path>D:\qsfile\zqqs\sh\</dest_path>
-		<flag_files></flag_files>
+		<origin_path>D:\BJS_Files</origin_path>
+		<dest_path>D:\qsfile\zqqs\nq\</dest_path>
+		<flag_files>END.OK;JS.OK</flag_files>
 		<file_pattern></file_pattern>
 	</file_source>
 	<file_source enable="false">

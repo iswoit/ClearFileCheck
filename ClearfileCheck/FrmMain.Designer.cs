@@ -37,6 +37,7 @@
             this.clmHead1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmHead0 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.clmHead4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lbStatus = new System.Windows.Forms.Label();
             this.numSecSpan = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
@@ -57,7 +58,6 @@
             this.状态 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.进度 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.是否收齐 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             ((System.ComponentModel.ISupportInitialize)(this.numSecSpan)).BeginInit();
             this.SuspendLayout();
             // 
@@ -83,11 +83,14 @@
             // 
             // btnExecute
             // 
-            this.btnExecute.Location = new System.Drawing.Point(811, 468);
+            this.btnExecute.Image = global::ClearfileCheck.Properties.Resources.control_play;
+            this.btnExecute.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnExecute.Location = new System.Drawing.Point(812, 468);
             this.btnExecute.Name = "btnExecute";
-            this.btnExecute.Size = new System.Drawing.Size(75, 27);
+            this.btnExecute.Size = new System.Drawing.Size(74, 27);
             this.btnExecute.TabIndex = 3;
             this.btnExecute.Text = "执行(&X)";
+            this.btnExecute.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.btnExecute.UseVisualStyleBackColor = true;
             this.btnExecute.Click += new System.EventHandler(this.btnExecute_Click);
             // 
@@ -130,6 +133,11 @@
             this.clmHead4.Text = "两边文件不一致";
             this.clmHead4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.clmHead4.Width = 120;
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "文件日期不是当日";
+            this.columnHeader3.Width = 120;
             // 
             // lbStatus
             // 
@@ -302,11 +310,6 @@
             // 是否收齐
             // 
             this.是否收齐.Text = "是否收齐";
-            // 
-            // columnHeader3
-            // 
-            this.columnHeader3.Text = "文件日期不是当日";
-            this.columnHeader3.Width = 120;
             // 
             // FrmMain
             // 

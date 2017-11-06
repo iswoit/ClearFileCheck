@@ -9,6 +9,8 @@ using System.Windows.Forms;
 using System.Xml;
 using System.IO;
 using System.Threading;
+using System.Resources;
+using System.Reflection;
 
 namespace ClearfileCheck
 {
@@ -63,10 +65,13 @@ namespace ClearfileCheck
              * 5.文件md5判断
              */
 
-            lbStatus.Text = "执行中...";
-            btnExecute.Text = "点击停止";
+            
             if (!bgWorker.IsBusy)
             {
+                lbStatus.Text = "执行中...";
+                btnExecute.Text = "点击停止";
+                
+                btnExecute.Image = (Image)Properties.Resources.ResourceManager.GetObject("control_pause");
                 bgWorker.RunWorkerAsync();
             }
             else
@@ -183,43 +188,42 @@ namespace ClearfileCheck
 
 
                 // 2.每一个FileSource，判断所有标志文件是否到
-                if (tmpFileSource.IsFlagFilesAllArrived == false)
+                tmpFileSource.IsFlagFilesAllArrived = false;
+                tmpFileSource.FlagFilesMissingList.Clear();     // 标志缺失列表
+                foreach (string tmpFlagFileName in tmpFileSource.FlagFilesList)
                 {
-                    tmpFileSource.FlagFilesMissingList.Clear();     // 标志缺失列表
-                    foreach (string tmpFlagFileName in tmpFileSource.FlagFilesList)
+                    string tmpFlagFilePath = Path.Combine(Util.Filename_Date_Convert(tmpFileSource.OriginPath), Util.Filename_Date_Convert(tmpFlagFileName));   // 实际的标志文件路径
+                    if (File.Exists(tmpFlagFilePath))  // *****要改良，如果不通很慢
                     {
-                        string tmpFlagFilePath = Path.Combine(Util.Filename_Date_Convert(tmpFileSource.OriginPath), Util.Filename_Date_Convert(tmpFlagFileName));   // 实际的标志文件路径
-                        if (File.Exists(tmpFlagFilePath))  // *****要改良，如果不通很慢
+                        // 如果tmpFlagFileName里没有包含日期通配符，则要求文件必须是当日的。
+                        if (!Util.Filename_Contain_DatePattern(tmpFlagFileName))
                         {
-                            // 如果tmpFlagFileName里没有包含日期通配符，则要求文件必须是当日的。
-                            if (!Util.Filename_Contain_DatePattern(tmpFlagFileName))
-                            {
-                                FileInfo fi = new FileInfo(tmpFlagFilePath);
-                                if (fi.LastWriteTime.Date != DateTime.Now.Date) // 不是今天
-                                    tmpFileSource.FlagFilesMissingList.Add(Util.Filename_Date_Convert(tmpFlagFileName));
-                            }
+                            FileInfo fi = new FileInfo(tmpFlagFilePath);
+                            if (fi.LastWriteTime.Date != DateTime.Now.Date) // 不是今天
+                                tmpFileSource.FlagFilesMissingList.Add(Util.Filename_Date_Convert(tmpFlagFileName));
                         }
-                        else
-                        {
-                            tmpFileSource.FlagFilesMissingList.Add(Util.Filename_Date_Convert(tmpFlagFileName));
-                        }
-
-
                     }
-                    tmpFileSource.IsFlagFilesAllArrived = tmpFileSource.FlagFilesMissingList.Count == 0 ? true : false;
-                    //更新状态
-                    if (tmpFileSource.IsFlagFilesAllArrived == false)
-                        tmpFileSource.Status = FileSourceStatus.标志文件未收齐;
                     else
-                        tmpFileSource.Status = FileSourceStatus.标志文件已收齐;
-                    bgWorker.ReportProgress(1);
+                    {
+                        tmpFileSource.FlagFilesMissingList.Add(Util.Filename_Date_Convert(tmpFlagFileName));
+                    }
+
+
                 }
+                tmpFileSource.IsFlagFilesAllArrived = tmpFileSource.FlagFilesMissingList.Count == 0 ? true : false;
+                //更新状态
+                if (tmpFileSource.IsFlagFilesAllArrived == false)
+                    tmpFileSource.Status = FileSourceStatus.标志文件未收齐;
+                else
+                    tmpFileSource.Status = FileSourceStatus.标志文件已收齐;
+                bgWorker.ReportProgress(1);
+
 
 
                 // 3.如果到齐，拉取文件列表
-                if (tmpFileSource.IsFlagFilesAllArrived == true && tmpFileSource.IsFileListAcquired == false)
+                if (tmpFileSource.IsFlagFilesAllArrived == true)
                 {
-
+                    tmpFileSource.IsFileListAcquired = false;
                     tmpFileSource.Status = FileSourceStatus.正在获取文件列表;
 
                     tmpFileSource.ClearFiles.Clear();   // 清空列表
@@ -243,88 +247,74 @@ namespace ClearfileCheck
                     bgWorker.ReportProgress(1);
 
                 }
-            }
 
 
-            // 4.循环列表，文件复制
-            foreach (FileSource tmpFileSource in _manager.FileSourceList)
-            {
-                if (tmpFileSource.Enable == false)  // 不启用的就跳过
-                    continue;
-
-                if (tmpFileSource.IsFileListAcquired == false)     // 文件列表不齐的，跳过
-                    continue;
-
-                tmpFileSource.Status = FileSourceStatus.文件复制中;
-                bgWorker.ReportProgress(1);
-
-                foreach (ClearFile tmpClearFile in tmpFileSource.ClearFiles)
+                // 4.文件复制
+                if (tmpFileSource.IsFileListAcquired == true)
                 {
-                    if (File.Exists(tmpClearFile.DestFileName))
-                    {
-                        tmpClearFile.IsCopied = true;
-                    }
-                    else
-                    {
-                        File.Copy(tmpClearFile.SourceFileName, tmpClearFile.DestFileName, true);
-                        tmpClearFile.IsCopied = true;
-                    }
-
-
+                    tmpFileSource.Status = FileSourceStatus.文件复制中;
                     bgWorker.ReportProgress(1);
-                    Thread.Sleep(10);
 
-                    if (bgWorker.CancellationPending)   // 取消按钮，这个要换个位置
+                    foreach (ClearFile tmpClearFile in tmpFileSource.ClearFiles)
                     {
-                        e.Cancel = true;
-                        return;
-                    }
-                }
-
-                tmpFileSource.Status = FileSourceStatus.文件复制完成;
-                bgWorker.ReportProgress(1);
-            }
-
-            // 5.文件判断MD5
-            foreach (FileSource tmpFileSource in _manager.FileSourceList)
-            {
-                if (tmpFileSource.Enable == false)  // 不启用的就跳过
-                    continue;
-
-                if (tmpFileSource.IsFileListAcquired == false)     // 文件列表不齐的，跳过
-                    continue;
-
-                if (tmpFileSource.IsAllFilesCopied == false)     // 文件未拷完，跳过
-                    continue;
-
-
-
-                tmpFileSource.Status = FileSourceStatus.文件检查开始;
-                bgWorker.ReportProgress(1);
-
-
-                foreach (ClearFile tmpClearFile in tmpFileSource.ClearFiles)
-                {
-                    if (File.Exists(tmpClearFile.SourceFileName) && File.Exists(tmpClearFile.DestFileName))
-                    {
-                        string md5Source = Util.GetMD5HashFromFile(tmpClearFile.SourceFileName);
-                        string md5Dest = Util.GetMD5HashFromFile(tmpClearFile.DestFileName);
-                        if (md5Source == md5Dest)
-                            tmpClearFile.IsMD5Equal = true;
+                        if (File.Exists(tmpClearFile.DestFileName))
+                        {
+                            tmpClearFile.IsCopied = true;
+                        }
                         else
-                            tmpClearFile.IsMD5Equal = false;
-                    }
-                    else
-                    {
-                        tmpClearFile.IsMD5Equal = null;
+                        {
+                            File.Copy(tmpClearFile.SourceFileName, tmpClearFile.DestFileName, true);
+                            tmpClearFile.IsCopied = true;
+                        }
+
+
+                        bgWorker.ReportProgress(1);
+                        Thread.Sleep(100);
+
+                        if (bgWorker.CancellationPending)   // 取消按钮，这个要换个位置
+                        {
+                            e.Cancel = true;
+                            return;
+                        }
                     }
 
+                    tmpFileSource.Status = FileSourceStatus.文件复制完成;
+                    bgWorker.ReportProgress(1);
                 }
 
-                tmpFileSource.Status = FileSourceStatus.文件检查结束;
-                bgWorker.ReportProgress(1);
+
+                // 5.文件检查
+                if (tmpFileSource.IsAllFilesCopied == true)
+                {
+                    tmpFileSource.Status = FileSourceStatus.文件检查开始;
+                    bgWorker.ReportProgress(1);
+
+
+                    foreach (ClearFile tmpClearFile in tmpFileSource.ClearFiles)
+                    {
+                        if (File.Exists(tmpClearFile.SourceFileName) && File.Exists(tmpClearFile.DestFileName))
+                        {
+                            string md5Source = Util.GetMD5HashFromFile(tmpClearFile.SourceFileName);
+                            string md5Dest = Util.GetMD5HashFromFile(tmpClearFile.DestFileName);
+                            if (md5Source == md5Dest)
+                                tmpClearFile.IsMD5Equal = true;
+                            else
+                                tmpClearFile.IsMD5Equal = false;
+                        }
+                        else
+                        {
+                            tmpClearFile.IsMD5Equal = null;
+                        }
+
+                    }
+
+                    tmpFileSource.Status = FileSourceStatus.文件检查结束;
+                    bgWorker.ReportProgress(1);
+                }
             }
 
+
+          
 
 
             bgWorker.ReportProgress(1);
@@ -357,7 +347,8 @@ namespace ClearfileCheck
                 lbStatus.Text = "执行完成";
             }
 
-            btnExecute.Text = "执行";
+            btnExecute.Text = "执行(&X)";
+            btnExecute.Image = (Image)Properties.Resources.ResourceManager.GetObject("control_play");
 
 
             // 计算下一次执行时间
