@@ -6,11 +6,12 @@ namespace ClearfileCheckManager
 {
     public class ClearFile
     {
-        private string _fileName;
-        private string _sourceFileName;
-        private string _destFileName;
-        private bool _isCopied;
-        private bool? _isMD5Equal;
+        private string _fileName;           // 文件名
+        private string _sourceFileName;     // 源文件
+        private string _destFileName;       // 目的地
+        private bool _isCopied;             // 是否已复制
+        private bool? _isCurDate;           // 是否当天文件
+        private bool? _isMD5Equal;          // MD5一致
 
 
         public ClearFile(string filename, string sourceFileName, string destFileName)
@@ -19,6 +20,7 @@ namespace ClearfileCheckManager
             _sourceFileName = sourceFileName;
             _destFileName = destFileName;
             _isCopied = false;
+            _isCurDate = null;
             _isMD5Equal = null;
         }
 
@@ -45,6 +47,12 @@ namespace ClearfileCheckManager
         {
             get { return _isCopied; }
             set { _isCopied = value; }
+        }
+
+        public bool? IsCurDay
+        {
+            get { return _isCurDate; }
+            set { _isCurDate = value; }
         }
 
         public bool? IsMD5Equal

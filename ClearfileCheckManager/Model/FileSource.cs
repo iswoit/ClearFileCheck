@@ -47,13 +47,13 @@ namespace ClearfileCheckManager
             if (convertResult == false)
                 _enable = true;
             _name = name;
-            _originPath = originPath;
-            _destPath = destPath;
+            _originPath = Util.Filename_Date_Convert(originPath);       // 源目录 
+            _destPath = Util.Filename_Date_Convert(destPath);
 
             // 标志文件特征
             string[] arr_flagfiles = flagFiles.Split(new char[] { ';', '|' });
             _flagFilesList = new List<string>();
-            foreach(string strTmp in arr_flagfiles)
+            foreach (string strTmp in arr_flagfiles)
             {
                 if (!string.IsNullOrEmpty(strTmp.Trim()))
                     _flagFilesList.Add(strTmp.Trim());
@@ -62,7 +62,7 @@ namespace ClearfileCheckManager
             // 清算文件特征
             string[] arr_file_pattern = filePattern.Split(new char[] { ';', '|' });
             _filePattern = new List<string>();
-            foreach(string strTmp in arr_file_pattern)
+            foreach (string strTmp in arr_file_pattern)
             {
                 if (!string.IsNullOrEmpty(strTmp.Trim()))
                     _filePattern.Add(strTmp.Trim());

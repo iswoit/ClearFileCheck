@@ -34,10 +34,10 @@
             this.btnExecute = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.lvFile = new System.Windows.Forms.ListView();
-            this.clmHead1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmHead0 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.clmHead4 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.cl0 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.cl1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.cl3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.cl2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.lbStatus = new System.Windows.Forms.Label();
             this.numSecSpan = new System.Windows.Forms.NumericUpDown();
             this.label3 = new System.Windows.Forms.Label();
@@ -45,7 +45,6 @@
             this.label10 = new System.Windows.Forms.Label();
             this.lbLastExecuteTime = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.bgWorker = new System.ComponentModel.BackgroundWorker();
             this.label4 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
@@ -106,10 +105,10 @@
             // lvFile
             // 
             this.lvFile.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
-            this.clmHead1,
-            this.clmHead0,
-            this.clmHead4,
-            this.columnHeader3});
+            this.cl0,
+            this.cl1,
+            this.cl2,
+            this.cl3});
             this.lvFile.FullRowSelect = true;
             this.lvFile.GridLines = true;
             this.lvFile.Location = new System.Drawing.Point(12, 209);
@@ -119,25 +118,26 @@
             this.lvFile.UseCompatibleStateImageBehavior = false;
             this.lvFile.View = System.Windows.Forms.View.Details;
             // 
-            // clmHead1
+            // cl0
             // 
-            this.clmHead1.Text = "文件源";
+            this.cl0.Text = "文件源";
             // 
-            // clmHead0
+            // cl1
             // 
-            this.clmHead0.Text = "文件名";
-            this.clmHead0.Width = 120;
+            this.cl1.Text = "文件名";
+            this.cl1.Width = 120;
             // 
-            // clmHead4
+            // cl3
             // 
-            this.clmHead4.Text = "两边文件不一致";
-            this.clmHead4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.clmHead4.Width = 120;
+            this.cl3.Text = "两边文件不一致";
+            this.cl3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.cl3.Width = 120;
             // 
-            // columnHeader3
+            // cl2
             // 
-            this.columnHeader3.Text = "文件日期不是当日";
-            this.columnHeader3.Width = 120;
+            this.cl2.Text = "文件日期不是当日";
+            this.cl2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.cl2.Width = 120;
             // 
             // lbStatus
             // 
@@ -214,16 +214,6 @@
             this.label5.Size = new System.Drawing.Size(89, 12);
             this.label5.TabIndex = 20;
             this.label5.Text = "文件拷贝进度：";
-            // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(743, 341);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(144, 16);
-            this.checkBox1.TabIndex = 21;
-            this.checkBox1.Text = "文件拷贝完成停止程序";
-            this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // bgWorker
             // 
@@ -305,7 +295,8 @@
             // 
             // 进度
             // 
-            this.进度.Text = "进度";
+            this.进度.Text = "文件进度";
+            this.进度.Width = 70;
             // 
             // 是否收齐
             // 
@@ -319,7 +310,6 @@
             this.Controls.Add(this.lbNextExecuteTime);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.lvStatus);
             this.Controls.Add(this.lbLastExecuteTime);
@@ -347,8 +337,8 @@
         private System.Windows.Forms.Button btnExecute;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ListView lvFile;
-        private System.Windows.Forms.ColumnHeader clmHead0;
-        private System.Windows.Forms.ColumnHeader clmHead4;
+        private System.Windows.Forms.ColumnHeader cl1;
+        private System.Windows.Forms.ColumnHeader cl3;
         private System.Windows.Forms.Label lbStatus;
         private System.Windows.Forms.NumericUpDown numSecSpan;
         private System.Windows.Forms.Label label3;
@@ -360,9 +350,8 @@
         private System.Windows.Forms.ColumnHeader 进度;
         private System.Windows.Forms.ColumnHeader 是否收齐;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.CheckBox checkBox1;
         private System.ComponentModel.BackgroundWorker bgWorker;
-        private System.Windows.Forms.ColumnHeader clmHead1;
+        private System.Windows.Forms.ColumnHeader cl0;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lbNextExecuteTime;
@@ -370,7 +359,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader1;
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.Timer timerExecute;
-        private System.Windows.Forms.ColumnHeader columnHeader3;
+        private System.Windows.Forms.ColumnHeader cl2;
     }
 }
 

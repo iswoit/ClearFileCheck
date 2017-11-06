@@ -65,12 +65,12 @@ namespace ClearfileCheck
              * 5.文件md5判断
              */
 
-            
+
             if (!bgWorker.IsBusy)
             {
                 lbStatus.Text = "执行中...";
                 btnExecute.Text = "点击停止";
-                
+
                 btnExecute.Image = (Image)Properties.Resources.ResourceManager.GetObject("control_pause");
                 bgWorker.RunWorkerAsync();
             }
@@ -90,16 +90,16 @@ namespace ClearfileCheck
         private void InitFileSourceInfo()
         {
             lvStatus.Items.Clear();
-            foreach (FileSource tmpFileSource in _manager.FileSourceList)
+            for (int i = 0; i < _manager.FileSourceList.Count; i++)
             {
-                ListViewItem lvi = new ListViewItem(tmpFileSource.Name);
-                lvi.SubItems.Add(tmpFileSource.OriginPath);
-                lvi.SubItems.Add(tmpFileSource.DestPath);
-                lvi.SubItems.Add(tmpFileSource.Status.ToString());
+                ListViewItem lvi = new ListViewItem(_manager.FileSourceList[i].Name);
+                lvi.SubItems.Add(_manager.FileSourceList[i].OriginPath);
+                lvi.SubItems.Add(_manager.FileSourceList[i].DestPath);
+                lvi.SubItems.Add(_manager.FileSourceList[i].Status.ToString());
                 lvi.SubItems.Add(string.Empty);
                 lvi.SubItems.Add(string.Empty);
 
-                lvi.Tag = tmpFileSource;
+                lvi.Tag = _manager.FileSourceList[i];
                 lvStatus.Items.Add(lvi);
 
 
@@ -110,25 +110,36 @@ namespace ClearfileCheck
                 //lvStatus.Columns[4].Width = -1;
                 //lvStatus.Columns[5].Width = -1;
             }
+
         }
 
 
+        /// <summary>
+        /// 
+        /// </summary>
         private void UpdateFileSourceInfo()
         {
-            lvStatus.BeginUpdate();
+            //lvStatus.BeginUpdate();
             // 进度列表
-            foreach (ListViewItem tmpLVI in lvStatus.Items)
+            try
             {
-                FileSource tmpFileSource = (FileSource)tmpLVI.Tag;
-                tmpLVI.SubItems[3].Text = tmpFileSource.Status.ToString();
-                if (tmpFileSource.Enable)
+                for (int i = 0; i < lvStatus.Items.Count; i++)
                 {
-                    tmpLVI.SubItems[4].Text = string.Format("{0}/{1}", tmpFileSource.CopiedFileCount, tmpFileSource.TotalFileCount);
-                    tmpLVI.SubItems[5].Text = tmpFileSource.IsAllFilesCopied ? "√" : "×";
+                    FileSource tmpFileSource = (FileSource)lvStatus.Items[i].Tag;   // 配置对象
+                    lvStatus.Items[i].SubItems[3].Text = tmpFileSource.Status.ToString();
+                    if (tmpFileSource.Enable)
+                    {
+                        lvStatus.Items[i].SubItems[4].Text = string.Format("{0}/{1}", tmpFileSource.CopiedFileCount, tmpFileSource.TotalFileCount);
+                        lvStatus.Items[i].SubItems[5].Text = tmpFileSource.IsAllFilesCopied ? "√" : "×";
+                    }
                 }
-
             }
-            lvStatus.EndUpdate();
+            catch (Exception ex)
+            {
+                // ui异常过滤
+            }
+
+            //lvStatus.EndUpdate();
 
         }
 
@@ -141,28 +152,32 @@ namespace ClearfileCheck
             {
                 foreach (ClearFile tmpClearFile in tmpFileSource.ClearFiles)
                 {
-                    if (tmpClearFile.IsMD5Equal == false)
+                    if (tmpClearFile.IsCopied == true && (tmpClearFile.IsCurDay == false || tmpClearFile.IsMD5Equal == false))
                     {
-                        ListViewItem lvi = new ListViewItem(tmpFileSource.Name);
-                        lvi.SubItems.Add(tmpClearFile.FileName);
+                        ListViewItem lvi = new ListViewItem(tmpFileSource.Name);    // 文件源
+                        lvi.SubItems.Add(tmpClearFile.FileName);                    // 文件名
 
-                        string md5Result = "";
+                        string curDayResult = string.Empty;
+                        if (tmpClearFile.IsCurDay.HasValue)
+                        {
+                            if (tmpClearFile.IsCurDay.Value == false)
+                                curDayResult = "×";
+                        }
+                        lvi.SubItems.Add(curDayResult);
+
+                        string md5Result = string.Empty;
                         if (tmpClearFile.IsMD5Equal.HasValue)
                         {
-                            if (tmpClearFile.IsMD5Equal.Value == true)
-                                md5Result = "√";
-                            else
+                            if (tmpClearFile.IsMD5Equal.Value == false)
                                 md5Result = "×";
                         }
                         lvi.SubItems.Add(md5Result);
 
-                        if (!(tmpClearFile.IsCopied == true && tmpClearFile.IsMD5Equal.HasValue == true && tmpClearFile.IsMD5Equal.Value == true))
-                        {
-                            lvi.BackColor = Color.OrangeRed;
-                        }
-
+                        lvi.BackColor = Color.Pink;
                         lvFile.Items.Add(lvi);
                     }
+
+
 
 
                 }
@@ -185,6 +200,15 @@ namespace ClearfileCheck
             {
                 if (tmpFileSource.Enable == false)  // 不启用的就跳过
                     continue;
+
+
+                // 判断源路径是否存在
+                if (!Directory.Exists(Util.Filename_Date_Convert(tmpFileSource.OriginPath)))
+                {
+                    // 报警
+                    tmpFileSource.Status = FileSourceStatus.路径无法访问;
+                    continue;
+                }
 
 
                 // 2.每一个FileSource，判断所有标志文件是否到
@@ -228,19 +252,32 @@ namespace ClearfileCheck
 
                     tmpFileSource.ClearFiles.Clear();   // 清空列表
                     DirectoryInfo di = new DirectoryInfo(Util.Filename_Date_Convert(tmpFileSource.OriginPath));     // 源文件夹
-                    foreach (string tmpPattern in tmpFileSource.FilePattern)     // 循环每个特征
+
+                    // 如果没有配置文件规则，就都拷贝，否则就只拷贝特征
+                    if (tmpFileSource.FilePattern.Count == 0)
                     {
-                        FileInfo[] fis = di.GetFiles(Util.Filename_Date_Convert(tmpPattern), SearchOption.TopDirectoryOnly);
+                        FileInfo[] fis = di.GetFiles();
                         foreach (FileInfo tmpFileInfo in fis)
                         {
-                            // *如果是标记文件，则不拷贝(还没做)
-
-
                             // 新建清算文件对象
                             ClearFile clearFile = new ClearFile(tmpFileInfo.Name, tmpFileInfo.FullName, Path.Combine(Util.Filename_Date_Convert(tmpFileSource.DestPath), tmpFileInfo.Name));
                             tmpFileSource.ClearFiles.Add(clearFile);
                         }
                     }
+                    else
+                    {
+                        foreach (string tmpPattern in tmpFileSource.FilePattern)     // 循环每个特征
+                        {
+                            FileInfo[] fis = di.GetFiles(Util.Filename_Date_Convert(tmpPattern), SearchOption.TopDirectoryOnly);
+                            foreach (FileInfo tmpFileInfo in fis)
+                            {
+                                // 新建清算文件对象
+                                ClearFile clearFile = new ClearFile(tmpFileInfo.Name, tmpFileInfo.FullName, Path.Combine(Util.Filename_Date_Convert(tmpFileSource.DestPath), tmpFileInfo.Name));
+                                tmpFileSource.ClearFiles.Add(clearFile);
+                            }
+                        }
+                    }
+
 
                     tmpFileSource.IsFileListAcquired = true;
                     tmpFileSource.Status = FileSourceStatus.文件列表获取完成;
@@ -269,7 +306,7 @@ namespace ClearfileCheck
 
 
                         bgWorker.ReportProgress(1);
-                        Thread.Sleep(100);
+                        Thread.Sleep(10);
 
                         if (bgWorker.CancellationPending)   // 取消按钮，这个要换个位置
                         {
@@ -294,6 +331,15 @@ namespace ClearfileCheck
                     {
                         if (File.Exists(tmpClearFile.SourceFileName) && File.Exists(tmpClearFile.DestFileName))
                         {
+                            tmpClearFile.IsCopied = true;
+
+                            FileInfo fi_dest = new FileInfo(tmpClearFile.DestFileName);
+                            if (fi_dest.LastWriteTime.Date == DateTime.Now.Date)
+                                tmpClearFile.IsCurDay = true;
+                            else
+                                tmpClearFile.IsCurDay = false;
+
+
                             string md5Source = Util.GetMD5HashFromFile(tmpClearFile.SourceFileName);
                             string md5Dest = Util.GetMD5HashFromFile(tmpClearFile.DestFileName);
                             if (md5Source == md5Dest)
@@ -303,7 +349,7 @@ namespace ClearfileCheck
                         }
                         else
                         {
-                            tmpClearFile.IsMD5Equal = null;
+                            tmpClearFile.IsCopied = false;
                         }
 
                     }
@@ -314,7 +360,7 @@ namespace ClearfileCheck
             }
 
 
-          
+
 
 
             bgWorker.ReportProgress(1);
@@ -324,7 +370,14 @@ namespace ClearfileCheck
 
         private void bgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-            UpdateFileSourceInfo();
+            try
+            {
+                UpdateFileSourceInfo();
+            }
+            catch (Exception ex)
+            {
+                Print_Error_Message(ex.Message);
+            }
         }
 
         private void bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
