@@ -7,11 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClearfileCheck", "Clearfile
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClearfileCheckManager", "ClearfileCheckManager\ClearfileCheckManager.csproj", "{42FC5982-2925-4B84-AB26-D1B5B19D6DDD}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DLL", "DLL", "{3F165C26-5151-44BF-9E03-A6F3082D7C18}"
-	ProjectSection(SolutionItems) = preProject
-		DLL\ICSharpCode.SharpZipLib.dll = DLL\ICSharpCode.SharpZipLib.dll
-	EndProjectSection
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

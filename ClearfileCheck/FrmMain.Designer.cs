@@ -165,7 +165,7 @@
             this.numSecSpan.Size = new System.Drawing.Size(37, 21);
             this.numSecSpan.TabIndex = 14;
             this.numSecSpan.Value = new decimal(new int[] {
-            20,
+            120,
             0,
             0,
             0});

@@ -47,6 +47,7 @@ namespace ClearfileCheckManager
                     string destPath = string.Empty;
                     string flagFiles = string.Empty;
                     string filePattern = string.Empty;
+                    string fileUnzipPattern = string.Empty;
 
 
                     XmlElement xe = (XmlElement)tmpXnl;
@@ -70,6 +71,9 @@ namespace ClearfileCheckManager
                             case "file_pattern":
                                 filePattern = xe.ChildNodes[i].InnerText;
                                 break;
+                            case "file_unzip_pattern":
+                                fileUnzipPattern = xe.ChildNodes[i].InnerText;
+                                break;
                         }
                     }
 
@@ -81,7 +85,8 @@ namespace ClearfileCheckManager
                         originPath.Trim(),
                         destPath.Trim(),
                         flagFiles.Trim(),
-                        filePattern.Trim());
+                        filePattern.Trim(),
+                        fileUnzipPattern.Trim());
 
                     // 创建目标路径
                     if (!Directory.Exists(destPath.Trim()))

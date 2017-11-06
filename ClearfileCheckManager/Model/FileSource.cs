@@ -16,8 +16,9 @@ namespace ClearfileCheckManager
         文件列表获取完成 = 6,
         文件复制中 = 7,
         文件复制完成 = 8,
-        文件检查开始 = 9,
-        文件检查结束 = 10
+        正在解压=9,
+        正在检查文件 =10,
+        文件检查结束 = 11
     }
 
     /// <summary>
@@ -32,6 +33,7 @@ namespace ClearfileCheckManager
         private string _destPath;               // 清算机路径
         private List<string> _flagFilesList;    // 标志文件列表
         private List<string> _filePattern;      // 文件样式
+        private List<string> _fileUnzipPattern;        // 需要解压的文件列表
 
         private bool _isFlagFilesAllArrived;    // 所有标志文件是否已就绪
         private List<string> _flagFilesMissingList;     // 还缺失的标志文件列表
@@ -40,7 +42,7 @@ namespace ClearfileCheckManager
         private List<ClearFile> _clearFiles;    // 清算文件列表
 
 
-        public FileSource(string enable, string name, string originPath, string destPath, string flagFiles, string filePattern)
+        public FileSource(string enable, string name, string originPath, string destPath, string flagFiles, string filePattern, string fileUnzipPattern)
         {
             // 配置是否启用（只有false是禁止，其他都是默认启用）
             bool convertResult = bool.TryParse(enable, out _enable);
@@ -67,6 +69,16 @@ namespace ClearfileCheckManager
                 if (!string.IsNullOrEmpty(strTmp.Trim()))
                     _filePattern.Add(strTmp.Trim());
             }
+
+            // 需要解压的文件列表
+            string[] arr_file_unzip_pattern = fileUnzipPattern.Split(new char[] { ';', '|' });
+            _fileUnzipPattern = new List<string>();
+            foreach (string strTmp in arr_file_unzip_pattern)
+            {
+                if (!string.IsNullOrEmpty(strTmp.Trim()))
+                    _fileUnzipPattern.Add(strTmp.Trim());
+            }
+
 
             _isFlagFilesAllArrived = false;
             _flagFilesMissingList = new List<string>();
@@ -123,6 +135,13 @@ namespace ClearfileCheckManager
         {
             get { return _filePattern; }
             set { _filePattern = value; }
+        }
+
+
+        public List<string> FileUnzipPattern
+        {
+            get { return _fileUnzipPattern; }
+            set { _fileUnzipPattern = value; }
         }
 
         public bool IsFlagFilesAllArrived

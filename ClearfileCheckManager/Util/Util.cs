@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using System.Text.RegularExpressions;
+using ICSharpCode.SharpZipLib;
+using ICSharpCode.SharpZipLib.Zip;
 
 namespace ClearfileCheckManager
 {
@@ -60,21 +62,23 @@ namespace ClearfileCheckManager
         {
             try
             {
-                FileStream file = new FileStream(fileName, FileMode.Open);
-                System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
-                byte[] retVal = md5.ComputeHash(file);
-                file.Close();
-
                 StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < retVal.Length; i++)
+                using (FileStream file = new FileStream(fileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
                 {
-                    sb.Append(retVal[i].ToString("x2"));
+                    System.Security.Cryptography.MD5 md5 = new System.Security.Cryptography.MD5CryptoServiceProvider();
+                    byte[] retVal = md5.ComputeHash(file);
+                    file.Close();
+
+                    for (int i = 0; i < retVal.Length; i++)
+                    {
+                        sb.Append(retVal[i].ToString("x2"));
+                    }
                 }
                 return sb.ToString();
             }
             catch (Exception ex)
             {
-                throw new Exception("GetMD5HashFromFile() fail, error:" + ex.Message);
+                throw new Exception("解析MD5出错:" + ex.Message);
             }
         }
 
@@ -85,13 +89,61 @@ namespace ClearfileCheckManager
         /// <param name="dt"></param>
         /// <param name="secondSpan"></param>
         /// <returns></returns>
-        public static DateTime GetNextExecuteTime(DateTime dt,int secondSpan)
+        public static DateTime GetNextExecuteTime(DateTime dt, int secondSpan)
         {
             DateTime dtReturn = dt.AddSeconds(secondSpan);
             return dtReturn;
         }
 
 
+        /// <summary>
+        /// 解压zip文件
+        /// </summary>
+        /// <param name="sourceFile"></param>
+        /// <param name="targetPath"></param>
+        public static void Decompress_zip(string sourceFile, string targetPath)
+        {
+            if (!File.Exists(sourceFile))
+            {
+                throw new FileNotFoundException(string.Format("未能找到文件 '{0}' ", sourceFile));
+            }
+            if (!Directory.Exists(targetPath))
+            {
+                Directory.CreateDirectory(targetPath);
+            }
+            using (ZipInputStream s = new ZipInputStream(File.OpenRead(sourceFile)))
+            {
+                ZipEntry theEntry;
+                while ((theEntry = s.GetNextEntry()) != null)
+                {
+                    string directorName = Path.Combine(targetPath, Path.GetDirectoryName(theEntry.Name));
+                    string fileName = Path.Combine(directorName, Path.GetFileName(theEntry.Name));
+                    // 创建目录
+                    if (directorName.Length > 0)
+                    {
+                        Directory.CreateDirectory(directorName);
+                    }
+                    if (fileName != string.Empty)
+                    {
+                        using (FileStream streamWriter = File.Create(fileName))
+                        {
+                            int size = 4096;
+                            byte[] data = new byte[4 * 1024];
+                            while (true)
+                            {
+                                size = s.Read(data, 0, data.Length);
+                                if (size > 0)
+                                {
+                                    streamWriter.Write(data, 0, size);
+                                }
+                                else break;
+                            }
+                        }
+                    }
+                }
+            }
+            return;
+        }
 
     }
 }

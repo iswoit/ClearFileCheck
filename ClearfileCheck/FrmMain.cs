@@ -320,10 +320,29 @@ namespace ClearfileCheck
                 }
 
 
-                // 5.文件检查
+                // 5.文件解压
                 if (tmpFileSource.IsAllFilesCopied == true)
                 {
-                    tmpFileSource.Status = FileSourceStatus.文件检查开始;
+                    tmpFileSource.Status = FileSourceStatus.正在解压;
+                    bgWorker.ReportProgress(1);
+                    foreach (string tmpUnzipPattern in tmpFileSource.FileUnzipPattern)
+                    {
+                        DirectoryInfo di = new DirectoryInfo(Util.Filename_Date_Convert(tmpFileSource.DestPath));     // 源文件夹
+
+                        FileInfo[] fis = di.GetFiles(Util.Filename_Date_Convert(tmpUnzipPattern), SearchOption.TopDirectoryOnly);
+                        foreach (FileInfo tmpFileInfo in fis)
+                        {
+                            // 解压
+                            Util.Decompress_zip(tmpFileInfo.FullName, Util.Filename_Date_Convert(tmpFileSource.DestPath));
+                        }
+                    }
+                }
+
+
+                // 6.文件检查
+                if (tmpFileSource.IsAllFilesCopied == true)
+                {
+                    tmpFileSource.Status = FileSourceStatus.正在检查文件;
                     bgWorker.ReportProgress(1);
 
 
