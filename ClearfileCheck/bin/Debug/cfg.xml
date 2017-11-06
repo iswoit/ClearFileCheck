@@ -37,17 +37,18 @@
 		<flag_files>END.OK;JS.OK</flag_files>
 		<file_pattern>*.DBF</file_pattern>
 	</file_source>
-	<file_source enable="false">
+	<file_source>
 		<name>中登账户</name>
-		<origin_path>\\10.32.0.133\dd\rptfile\YYYYMMDD\</origin_path>
-		<dest_path>D:\qsfile\zqqs\sh\</dest_path>
+		<origin_path>D:\recv\</origin_path>
+		<dest_path>D:\qsfile\zqqs\zh\</dest_path>
 		<flag_files></flag_files>
 		<file_pattern></file_pattern>
+		<file_unzip_pattern>*.bz2</file_unzip_pattern>
 	</file_source>
 	<file_source enable="false">
 		<name>TA多金</name>
-		<origin_path>\\10.32.0.133\dd\rptfile\YYYYMMDD\</origin_path>
-		<dest_path>D:\qsfile\zqqs\sh\</dest_path>
+		<origin_path>?</origin_path>
+		<dest_path>D:\qsfile\zqqs\ta\</dest_path>
 		<flag_files></flag_files>
 		<file_pattern></file_pattern>
 	</file_source>

@@ -29,73 +29,76 @@ namespace ClearfileCheckManager
             XmlDocument doc = new XmlDocument();
             XmlReaderSettings settings = new XmlReaderSettings();
             settings.IgnoreComments = true;     //忽略文档里面的注释
-            XmlReader reader = XmlReader.Create(@"cfg.xml", settings);
-            doc.Load(reader);
-
-            // 根据配置文件，生成对象
-            XmlNode rootNode = doc.SelectSingleNode("sources");   // 根节点
-            if (rootNode == null)
-                throw new Exception("无法找到配置文件的根节点<sources>，请检查配置文件格式是否正确!");
-
-            foreach (XmlNode tmpXnl in rootNode.ChildNodes)     // 遍历每一个子节点
+            using (XmlReader reader = XmlReader.Create(@"cfg.xml", settings))
             {
-                if (tmpXnl.Name.ToLower().Trim() == "file_source")  // 只能是file_source节点
+                doc.Load(reader);
+
+                // 根据配置文件，生成对象
+                XmlNode rootNode = doc.SelectSingleNode("sources");   // 根节点
+                if (rootNode == null)
+                    throw new Exception("无法找到配置文件的根节点<sources>，请检查配置文件格式是否正确!");
+
+                foreach (XmlNode tmpXnl in rootNode.ChildNodes)     // 遍历每一个子节点
                 {
-                    string enable = string.Empty;
-                    string name = string.Empty;
-                    string originPath = string.Empty;
-                    string destPath = string.Empty;
-                    string flagFiles = string.Empty;
-                    string filePattern = string.Empty;
-                    string fileUnzipPattern = string.Empty;
-
-
-                    XmlElement xe = (XmlElement)tmpXnl;
-                    enable = xe.GetAttribute("enable");     // 启用标志（只要不是enable="false"，都算启用）
-                    for (int i = 0; i < xe.ChildNodes.Count; i++)
+                    if (tmpXnl.Name.ToLower().Trim() == "file_source")  // 只能是file_source节点
                     {
-                        switch (xe.ChildNodes[i].Name.ToLower().Trim())
+                        string enable = string.Empty;
+                        string name = string.Empty;
+                        string originPath = string.Empty;
+                        string destPath = string.Empty;
+                        string flagFiles = string.Empty;
+                        string filePattern = string.Empty;
+                        string fileUnzipPattern = string.Empty;
+
+
+                        XmlElement xe = (XmlElement)tmpXnl;
+                        enable = xe.GetAttribute("enable");     // 启用标志（只要不是enable="false"，都算启用）
+                        for (int i = 0; i < xe.ChildNodes.Count; i++)
                         {
-                            case "name":
-                                name = xe.ChildNodes[i].InnerText;
-                                break;
-                            case "origin_path":
-                                originPath = xe.ChildNodes[i].InnerText;
-                                break;
-                            case "dest_path":
-                                destPath = xe.ChildNodes[i].InnerText;
-                                break;
-                            case "flag_files":
-                                flagFiles = xe.ChildNodes[i].InnerText;
-                                break;
-                            case "file_pattern":
-                                filePattern = xe.ChildNodes[i].InnerText;
-                                break;
-                            case "file_unzip_pattern":
-                                fileUnzipPattern = xe.ChildNodes[i].InnerText;
-                                break;
+                            switch (xe.ChildNodes[i].Name.ToLower().Trim())
+                            {
+                                case "name":
+                                    name = xe.ChildNodes[i].InnerText;
+                                    break;
+                                case "origin_path":
+                                    originPath = xe.ChildNodes[i].InnerText;
+                                    break;
+                                case "dest_path":
+                                    destPath = xe.ChildNodes[i].InnerText;
+                                    break;
+                                case "flag_files":
+                                    flagFiles = xe.ChildNodes[i].InnerText;
+                                    break;
+                                case "file_pattern":
+                                    filePattern = xe.ChildNodes[i].InnerText;
+                                    break;
+                                case "file_unzip_pattern":
+                                    fileUnzipPattern = xe.ChildNodes[i].InnerText;
+                                    break;
+                            }
                         }
+
+
+                        // 生成对象
+                        FileSource tmpFileSource = new FileSource(
+                            enable,
+                            name,
+                            originPath.Trim(),
+                            destPath.Trim(),
+                            flagFiles.Trim(),
+                            filePattern.Trim(),
+                            fileUnzipPattern.Trim());
+
+                        // 创建目标路径
+                        if (!Directory.Exists(destPath.Trim()))
+                            Directory.CreateDirectory(destPath.Trim());
+
+                        // 对象加入列表
+                        _fileSourceList.Add(tmpFileSource);
                     }
-
-
-                    // 生成对象
-                    FileSource tmpFileSource = new FileSource(
-                        enable,
-                        name,
-                        originPath.Trim(),
-                        destPath.Trim(),
-                        flagFiles.Trim(),
-                        filePattern.Trim(),
-                        fileUnzipPattern.Trim());
-
-                    // 创建目标路径
-                    if (!Directory.Exists(destPath.Trim()))
-                        Directory.CreateDirectory(destPath.Trim());
-
-                    // 对象加入列表
-                    _fileSourceList.Add(tmpFileSource);
                 }
             }
+
 
         }
 

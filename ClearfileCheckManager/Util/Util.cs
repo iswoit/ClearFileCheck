@@ -5,6 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using ICSharpCode.SharpZipLib;
 using ICSharpCode.SharpZipLib.Zip;
+using ICSharpCode.SharpZipLib.BZip2;
 
 namespace ClearfileCheckManager
 {
@@ -97,7 +98,7 @@ namespace ClearfileCheckManager
 
 
         /// <summary>
-        /// 解压zip文件
+        /// 解压zip文件(需要修改！，文件存在就不解压，只判断md5？)
         /// </summary>
         /// <param name="sourceFile"></param>
         /// <param name="targetPath"></param>
@@ -143,6 +144,39 @@ namespace ClearfileCheckManager
                 }
             }
             return;
+        }
+
+
+        /// <summary>
+        /// 解压bz2文件(需要修改！，文件存在就不解压，只判断md5？)
+        /// </summary>
+        /// <param name="zipfilename"></param>
+        /// <param name="unzipfilename"></param>
+        public static void Decompress_bz2(string zipfilename, string unzipfilename)
+        {
+            string dir = unzipfilename;
+            //解压文件夹为空时默认与压缩文件同一级目录下，跟压缩文件同名的文件夹   
+            if (dir == "")
+                dir = zipfilename.Replace(Path.GetFileName(zipfilename), Path.GetFileNameWithoutExtension(zipfilename));
+            if (!dir.EndsWith(@"\"))
+                dir += @"\";
+            if (!Directory.Exists(dir))
+                Directory.CreateDirectory(dir);
+            //创建压缩文件的输入流实例
+            using (BZip2InputStream zipFile = new BZip2InputStream(File.OpenRead(zipfilename)))
+            {
+                //创建目标文件的流
+                using (FileStream destFile = File.Open(dir + Path.GetFileNameWithoutExtension(zipfilename), FileMode.Create))
+                {
+                    int buffersize = 2048;//缓冲区的尺寸，一般是2048的倍数
+                    byte[] FileData = new byte[buffersize];//创建缓冲数据
+                    while (buffersize > 0)//一直读取到文件末尾
+                    {
+                        buffersize = zipFile.Read(FileData, 0, buffersize);//读取压缩文件数据
+                        destFile.Write(FileData, 0, buffersize);//写入目标文件
+                    }
+                }
+            }
         }
 
     }

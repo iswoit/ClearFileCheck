@@ -134,7 +134,7 @@ namespace ClearfileCheck
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // ui异常过滤
             }
@@ -333,7 +333,10 @@ namespace ClearfileCheck
                         foreach (FileInfo tmpFileInfo in fis)
                         {
                             // 解压
-                            Util.Decompress_zip(tmpFileInfo.FullName, Util.Filename_Date_Convert(tmpFileSource.DestPath));
+                            if(tmpUnzipPattern.ToLower().Contains("zip"))   // zip
+                                Util.Decompress_zip(tmpFileInfo.FullName, Util.Filename_Date_Convert(tmpFileSource.DestPath));
+                            else if(tmpUnzipPattern.ToLower().Contains("bz2"))  // bz2
+                                Util.Decompress_bz2(tmpFileInfo.FullName, Util.Filename_Date_Convert(tmpFileSource.DestPath));
                         }
                     }
                 }
@@ -403,11 +406,11 @@ namespace ClearfileCheck
         {
             if (e.Error != null)
             {
-                MessageBox.Show("Error");
+                Print_Error_Message(e.Error.Message);
             }
             else if (e.Cancelled)
             {
-                MessageBox.Show("Canceled");
+                Print_Error_Message("任务被手工取消");
             }
             else
             {
