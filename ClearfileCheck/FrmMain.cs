@@ -19,6 +19,9 @@ namespace ClearfileCheck
         Manager _manager = null;
 
 
+        /// <summary>
+        /// Frm构造函数
+        /// </summary>
         public FrmMain()
         {
             InitializeComponent();
@@ -50,39 +53,17 @@ namespace ClearfileCheck
         }
 
 
+        /// <summary>
+        /// 输出带时间的错误日志至log框
+        /// </summary>
+        /// <param name="message"></param>
         private void Print_Error_Message(string message)
         {
             tbError.Text = string.Format("{0}:{1}", DateTime.Now.ToString("HH:mm:ss"), message) + System.Environment.NewLine + tbError.Text;
         }
 
 
-        private void btnExecute_Click(object sender, EventArgs e)
-        {
-            /* 1.循环FileSource列表
-             * 2.每一个FileSource，判断所有标志文件是否到
-             * 3.如果到齐，获取文件列表
-             * 4.文件复制，
-             * 5.文件md5判断
-             */
-
-
-            if (!bgWorker.IsBusy)
-            {
-                lbStatus.Text = "执行中...";
-                lbStatus.BackColor = Color.Yellow;
-                btnExecute.Text = "点击停止";
-
-                btnExecute.Image = (Image)Properties.Resources.ResourceManager.GetObject("control_pause");
-                lvFile.Items.Clear();
-                bgWorker.RunWorkerAsync();
-            }
-            else
-            {
-                bgWorker.CancelAsync();
-            }
-
-        }
-
+       
 
         #region 更新UI方法
 
@@ -135,13 +116,13 @@ namespace ClearfileCheck
                         lvStatus.Items[i].SubItems[5].Text = tmpFileSource.IsAllFilesCopied ? "√" : "×";
                     }
 
-                    if(tmpFileSource.IsRunning)
+                    if (tmpFileSource.IsRunning)
                     {
                         lvStatus.Items[i].BackColor = Color.LightBlue;
                     }
                     else
                     {
-                        lvStatus.Items[i].BackColor= SystemColors.Window;
+                        lvStatus.Items[i].BackColor = SystemColors.Window;
                     }
 
                 }
@@ -201,7 +182,7 @@ namespace ClearfileCheck
         #endregion
 
 
-        #region 执行任务
+        #region BgWorker执行任务事件
 
         private void bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
@@ -212,6 +193,13 @@ namespace ClearfileCheck
                 // 0.循环FileSource列表
                 foreach (FileSource tmpFileSource in _manager.FileSourceList)
                 {
+                    // 取消任务判断
+                    if (bgWorker.CancellationPending)
+                    {
+                        e.Cancel = true;
+                        return;
+                    }
+
                     tmpFileSource.IsRunning = true;
                     bgWorker.ReportProgress(1);
 
@@ -222,7 +210,7 @@ namespace ClearfileCheck
                         bgWorker.ReportProgress(1);
                         continue;
                     }
-                        
+
 
 
                     /* 1.判断规则源路径是否存在
@@ -386,6 +374,13 @@ namespace ClearfileCheck
                                     UserState us = new UserState(true, string.Format("文件源[{0}]，文件[{1}]解压发生错误发生错误:{2}", tmpFileSource.Name, tmpFileInfo.Name, ex.Message));
                                     bgWorker.ReportProgress(1, us);
                                 }
+
+                                // 取消任务判断
+                                if (bgWorker.CancellationPending)
+                                {
+                                    e.Cancel = true;
+                                    return;
+                                }
                             }
                         }
                     }
@@ -493,17 +488,63 @@ namespace ClearfileCheck
                 lbStatus.BackColor = Color.ForestGreen;
             }
 
-            btnExecute.Text = "点击执行";
-            try
-            {
-                btnExecute.Image = (Image)Properties.Resources.ResourceManager.GetObject("control_play");
-            }
-            catch (Exception)
-            { }
+
+            btnExecute.Enabled = true;
+            btnStop.Enabled = false;
 
 
             DateTime dtNow = DateTime.Now;
             lbLastExecuteTime.Text = dtNow.ToString("HH:mm:ss");
+        }
+        #endregion
+
+
+
+
+        #region 按钮事件
+
+        /// <summary>
+        /// 执行按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnExecute_Click(object sender, EventArgs e)
+        {
+            /* 1.循环FileSource列表
+             * 2.每一个FileSource，判断所有标志文件是否到
+             * 3.如果到齐，获取文件列表
+             * 4.文件复制，
+             * 5.文件md5判断
+             */
+
+
+            if (!bgWorker.IsBusy)
+            {
+
+                lbStatus.Text = "执行中...";
+                lbStatus.BackColor = Color.Yellow;
+                btnExecute.Enabled = false;
+                btnStop.Enabled = true;
+
+                lvFile.Items.Clear();
+                lvFile.Items.Add("等待执行结果...");
+                lvFile.Columns[0].Width = -1;
+
+                bgWorker.RunWorkerAsync();
+            }
+
+        }
+
+
+        /// <summary>
+        /// 停止按钮
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnStop_Click(object sender, EventArgs e)
+        {
+            if (bgWorker.IsBusy)
+                bgWorker.CancelAsync();
         }
         #endregion
 
@@ -517,5 +558,6 @@ namespace ClearfileCheck
         {
 
         }
+
     }
 }

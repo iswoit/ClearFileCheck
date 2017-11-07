@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FrmMain));
             this.tbError = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnExecute = new System.Windows.Forms.Button();
@@ -52,6 +53,7 @@
             this.状态 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.进度 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.是否收齐 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.btnStop = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // tbError
@@ -83,7 +85,7 @@
             this.btnExecute.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExecute.Image = global::ClearfileCheck.Properties.Resources.control_play;
             this.btnExecute.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExecute.Location = new System.Drawing.Point(645, 446);
+            this.btnExecute.Location = new System.Drawing.Point(518, 426);
             this.btnExecute.Name = "btnExecute";
             this.btnExecute.Size = new System.Drawing.Size(83, 27);
             this.btnExecute.TabIndex = 3;
@@ -105,8 +107,9 @@
             // 
             // lvFile
             // 
-            this.lvFile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left)));
+            this.lvFile.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.lvFile.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.cl0,
             this.cl1,
@@ -116,7 +119,7 @@
             this.lvFile.GridLines = true;
             this.lvFile.Location = new System.Drawing.Point(12, 209);
             this.lvFile.Name = "lvFile";
-            this.lvFile.Size = new System.Drawing.Size(470, 120);
+            this.lvFile.Size = new System.Drawing.Size(716, 120);
             this.lvFile.TabIndex = 7;
             this.lvFile.UseCompatibleStateImageBehavior = false;
             this.lvFile.View = System.Windows.Forms.View.Details;
@@ -128,7 +131,7 @@
             // cl1
             // 
             this.cl1.Text = "文件名";
-            this.cl1.Width = 120;
+            this.cl1.Width = 200;
             // 
             // cl2
             // 
@@ -145,7 +148,7 @@
             // lbStatus
             // 
             this.lbStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbStatus.Location = new System.Drawing.Point(547, 448);
+            this.lbStatus.Location = new System.Drawing.Point(607, 386);
             this.lbStatus.Name = "lbStatus";
             this.lbStatus.Size = new System.Drawing.Size(82, 23);
             this.lbStatus.TabIndex = 8;
@@ -156,7 +159,7 @@
             // 
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(499, 415);
+            this.label10.Location = new System.Drawing.Point(500, 364);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(101, 12);
             this.label10.TabIndex = 17;
@@ -166,7 +169,7 @@
             // 
             this.lbLastExecuteTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lbLastExecuteTime.AutoSize = true;
-            this.lbLastExecuteTime.Location = new System.Drawing.Point(606, 415);
+            this.lbLastExecuteTime.Location = new System.Drawing.Point(607, 364);
             this.lbLastExecuteTime.Name = "lbLastExecuteTime";
             this.lbLastExecuteTime.Size = new System.Drawing.Size(23, 12);
             this.lbLastExecuteTime.TabIndex = 18;
@@ -193,7 +196,7 @@
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(500, 454);
+            this.label4.Location = new System.Drawing.Point(560, 391);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(41, 12);
             this.label4.TabIndex = 22;
@@ -253,11 +256,27 @@
             // 
             this.是否收齐.Text = "是否收齐";
             // 
+            // btnStop
+            // 
+            this.btnStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStop.Enabled = false;
+            this.btnStop.Image = global::ClearfileCheck.Properties.Resources.control_stop;
+            this.btnStop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnStop.Location = new System.Drawing.Point(619, 426);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(83, 27);
+            this.btnStop.TabIndex = 23;
+            this.btnStop.Text = "点击停止";
+            this.btnStop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(766, 509);
+            this.Controls.Add(this.btnStop);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.lvStatus);
@@ -269,6 +288,7 @@
             this.Controls.Add(this.btnExecute);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tbError);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "清算文件拷贝";
@@ -301,6 +321,7 @@
         private System.Windows.Forms.ColumnHeader columnHeader2;
         private System.Windows.Forms.Timer timerExecute;
         private System.Windows.Forms.ColumnHeader cl2;
+        private System.Windows.Forms.Button btnStop;
     }
 }
 

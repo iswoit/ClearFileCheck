@@ -4,7 +4,7 @@
 	<file_source>
 		<name>上交所</name>
 		<origin_path>D:\rptfile\YYYYMMDD\</origin_path>
-		<dest_path>D:\qsfile\zqqs\sh\test</dest_path>
+		<dest_path>D:\qsfile\zqqs\sh\</dest_path>
 		<flag_files></flag_files>
 		<file_pattern></file_pattern>
 		<file_unzip_pattern>*.zip</file_unzip_pattern>
@@ -25,8 +25,8 @@
 	</file_source>
 	<file_source enable="false">
 		<name>股转</name>
-		<origin_path>\\10.32.0.133\dd\rptfile\YYYYMMDD\</origin_path>
-		<dest_path>D:\qsfile\zqqs\sh\</dest_path>
+		<origin_path>?</origin_path>
+		<dest_path>D:\qsfile\zqqs\nq\</dest_path>
 		<flag_files></flag_files>
 		<file_pattern></file_pattern>
 	</file_source>
