@@ -10,8 +10,11 @@ namespace ClearfileCheckManager
         private string _sourceFilePath;     // 源文件
         private string _destFilePath;       // 目的地
         private bool _isCopied;             // 是否已复制
+
+        private bool _isCheckPassed;        // 是否检查通过
         private bool? _isCurDate;           // 是否当天文件
         private bool? _isMD5Equal;          // MD5一致
+
         private List<string> _unzipedFiles; // 被解压的文件列表（还没用到）
 
         public ClearFile(string filename, string sourceFileName, string destFileName)
@@ -20,6 +23,7 @@ namespace ClearfileCheckManager
             _sourceFilePath = sourceFileName;
             _destFilePath = destFileName;
             _isCopied = false;
+            _isCheckPassed = false;
             _isCurDate = null;
             _isMD5Equal = null;
             _unzipedFiles = new List<string>();
@@ -57,6 +61,18 @@ namespace ClearfileCheckManager
         {
             get { return _isCopied; }
             set { _isCopied = value; }
+        }
+
+        /// <summary>
+        /// 通过检查
+        /// </summary>
+        public bool IsCheckPassed
+        {
+            get
+            {
+                return _isCheckPassed;
+            }
+            set { _isCheckPassed = value; }
         }
 
         /// <summary>

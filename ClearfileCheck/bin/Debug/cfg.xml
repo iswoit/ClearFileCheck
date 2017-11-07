@@ -1,13 +1,19 @@
 <?xml version="1.0" encoding="GBK"?>
 <sources>
 	<!--配置-->
+	<file_source enable="true">
+		<name>z股转</name>
+		<source>\\10.32.108.37\d$\nq\</source>
+		<dest>D:\qsfile\zqqs\nq\</dest>
+		<flag></flag>
+		<pattern></pattern>
+	</file_source>
 	<file_source>
 		<name>上交所</name>
 		<source>D:\rptfile\YYYYMMDD\</source>
 		<dest>D:\qsfile\zqqs\sh\</dest>
 		<flag></flag>
 		<pattern></pattern>
-		<unzip_pattern>*.zip</unzip_pattern>
 	</file_source>
 	<file_source enable="true">
 		<name>中登上海</name>

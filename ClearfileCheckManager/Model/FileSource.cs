@@ -18,7 +18,7 @@ namespace ClearfileCheckManager
         文件复制完成 = 8,
         正在解压 = 9,
         正在检查文件 = 10,
-        文件检查结束 = 11
+        完成 = 11
     }
 
     /// <summary>
@@ -33,7 +33,6 @@ namespace ClearfileCheckManager
         private string _destPath;               // 清算机路径
         private List<string> _flagFilesList;    // 标志文件列表
         private List<string> _filePattern;      // 文件样式
-        private List<string> _fileUnzipPattern;        // 需要解压的文件列表
         private List<string> _listNoCopyPattern;           // 不需要拷贝的文件列表(可能包含*号通配，mdd日期通配)
 
         private bool _isFlagFilesAllArrived;    // 所有标志文件是否已就绪
@@ -46,7 +45,7 @@ namespace ClearfileCheckManager
 
 
 
-        public FileSource(string enable, string name, string originPath, string destPath, string flagFiles, string filePattern, string fileUnzipPattern, string noCopy)
+        public FileSource(string enable, string name, string originPath, string destPath, string flagFiles, string filePattern, string noCopy)
         {
             // 配置是否启用（只有false是禁止，其他都是默认启用）
             bool convertResult = bool.TryParse(enable, out _enable);
@@ -74,14 +73,6 @@ namespace ClearfileCheckManager
                     _filePattern.Add(strTmp.Trim());
             }
 
-            // 需要解压的文件列表
-            string[] arr_file_unzip_pattern = fileUnzipPattern.Split(new char[] { '|', ';', '；', ',', '，' });
-            _fileUnzipPattern = new List<string>();
-            foreach (string strTmp in arr_file_unzip_pattern)
-            {
-                if (!string.IsNullOrEmpty(strTmp.Trim()))
-                    _fileUnzipPattern.Add(strTmp.Trim());
-            }
 
             // 不需要拷贝的模式列表
             string[] arr_list_no_copy_pattern = noCopy.Split(new char[] { '|', ';', '；', ',', '，' });
@@ -149,12 +140,6 @@ namespace ClearfileCheckManager
             set { _filePattern = value; }
         }
 
-
-        public List<string> FileUnzipPattern
-        {
-            get { return _fileUnzipPattern; }
-            set { _fileUnzipPattern = value; }
-        }
 
 
         /// <summary>
@@ -237,6 +222,36 @@ namespace ClearfileCheckManager
                     return false;
 
                 return TotalFileCount == CopiedFileCount;
+            }
+        }
+
+        /// <summary>
+        /// 检查所有检查都通过（文件大小、当日）
+        /// </summary>
+        public bool IsAllCheckPassed
+        {
+            get
+            {
+                if (Enable == false)
+                    return false;
+
+                if (IsFlagFilesAllArrived == false)
+                    return false;
+
+                if (IsFileListAcquired == false)
+                    return false;
+
+                if (IsAllFilesCopied == false)
+                    return false;
+
+
+                foreach (ClearFile tmp in _clearFiles)
+                {
+                    if (tmp.IsCheckPassed == false)
+                        return false;
+                }
+
+                return true;
             }
         }
 

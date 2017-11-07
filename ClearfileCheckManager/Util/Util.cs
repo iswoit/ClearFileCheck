@@ -141,6 +141,10 @@ namespace ClearfileCheckManager
                 {
                     string directorName = Path.Combine(targetPath, Path.GetDirectoryName(theEntry.Name));
                     string fileName = Path.Combine(directorName, Path.GetFileName(theEntry.Name));
+
+                    if (File.Exists(fileName))
+                        File.Delete(fileName);
+
                     // 创建目录
                     if (directorName.Length > 0)
                     {

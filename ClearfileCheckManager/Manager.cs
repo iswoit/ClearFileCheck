@@ -48,7 +48,6 @@ namespace ClearfileCheckManager
                         string destPath = string.Empty;
                         string flagFiles = string.Empty;
                         string filePattern = string.Empty;
-                        string fileUnzipPattern = string.Empty;
                         string noCopy = string.Empty;
 
 
@@ -73,15 +72,21 @@ namespace ClearfileCheckManager
                                 case "pattern": // 拷贝文件
                                     filePattern = xe.ChildNodes[i].InnerText;
                                     break;
-                                case "unzip_pattern":  // 需要解压的文件
-                                    fileUnzipPattern = xe.ChildNodes[i].InnerText;
-                                    break;
                                 case "nocopy":
-                                    noCopy= xe.ChildNodes[i].InnerText;
+                                    noCopy = xe.ChildNodes[i].InnerText;
                                     break;
                             }
                         }
 
+                        bool _enable;
+                        // 配置是否启用（只有false是禁止，其他都是默认启用）
+                        bool convertResult = bool.TryParse(enable, out _enable);
+                        if (convertResult == false)
+                            _enable = true;
+                        if (_enable == false)
+                        {
+                            continue;
+                        }
 
                         // 生成对象
                         FileSource tmpFileSource = new FileSource(
@@ -91,7 +96,6 @@ namespace ClearfileCheckManager
                             destPath.Trim(),
                             flagFiles.Trim(),
                             filePattern.Trim(),
-                            fileUnzipPattern.Trim(),
                             noCopy);
 
                         // 创建目标路径

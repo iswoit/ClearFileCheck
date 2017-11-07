@@ -58,7 +58,9 @@
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.状态 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.进度 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.是否收齐 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.标志到齐 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.拷贝完成 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
+            this.检查通过 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -282,7 +284,9 @@
             this.columnHeader2,
             this.状态,
             this.进度,
-            this.是否收齐});
+            this.标志到齐,
+            this.拷贝完成,
+            this.检查通过});
             this.lvStatus.FullRowSelect = true;
             this.lvStatus.GridLines = true;
             this.lvStatus.Location = new System.Drawing.Point(12, 24);
@@ -317,9 +321,20 @@
             this.进度.Text = "文件进度";
             this.进度.Width = 70;
             // 
-            // 是否收齐
+            // 标志到齐
             // 
-            this.是否收齐.Text = "是否收齐";
+            this.标志到齐.Text = "标志到齐";
+            this.标志到齐.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // 拷贝完成
+            // 
+            this.拷贝完成.Text = "拷贝完成";
+            this.拷贝完成.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // 检查通过
+            // 
+            this.检查通过.Text = "检查通过";
+            this.检查通过.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // FrmMain
             // 
@@ -366,7 +381,7 @@
         private ClearfileCheckManager.DoubleBufferListView lvStatus;
         private System.Windows.Forms.ColumnHeader 文件源;
         private System.Windows.Forms.ColumnHeader 进度;
-        private System.Windows.Forms.ColumnHeader 是否收齐;
+        private System.Windows.Forms.ColumnHeader 标志到齐;
         private System.Windows.Forms.Label label5;
         private System.ComponentModel.BackgroundWorker bgWorker;
         private System.Windows.Forms.ColumnHeader cl0;
@@ -382,6 +397,8 @@
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel statusTime;
         private System.Windows.Forms.Timer timerCurrentTime;
+        private System.Windows.Forms.ColumnHeader 拷贝完成;
+        private System.Windows.Forms.ColumnHeader 检查通过;
     }
 }
 

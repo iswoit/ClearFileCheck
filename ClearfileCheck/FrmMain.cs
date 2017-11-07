@@ -81,9 +81,11 @@ namespace ClearfileCheck
                 ListViewItem lvi = new ListViewItem(_manager.FileSourceList[i].Name);
                 lvi.SubItems.Add(_manager.FileSourceList[i].OriginPath);
                 lvi.SubItems.Add(_manager.FileSourceList[i].DestPath);
-                lvi.SubItems.Add(_manager.FileSourceList[i].Status.ToString());
-                lvi.SubItems.Add(string.Empty);
-                lvi.SubItems.Add(string.Empty);
+                lvi.SubItems.Add(_manager.FileSourceList[i].Status.ToString());      // 状态
+                lvi.SubItems.Add(string.Empty);     // 文件进度
+                lvi.SubItems.Add(string.Empty);     // 标志到齐
+                lvi.SubItems.Add(string.Empty);     // 拷贝完成
+                lvi.SubItems.Add(string.Empty);     // 检查通过
 
                 lvi.Tag = _manager.FileSourceList[i];
                 lvStatus.Items.Add(lvi);
@@ -115,13 +117,16 @@ namespace ClearfileCheck
                     lvStatus.Items[i].SubItems[3].Text = tmpFileSource.Status.ToString();
                     if (tmpFileSource.Enable)
                     {
-                        lvStatus.Items[i].SubItems[4].Text = string.Format("{0}/{1}", tmpFileSource.CopiedFileCount, tmpFileSource.TotalFileCount);
-                        lvStatus.Items[i].SubItems[5].Text = tmpFileSource.IsAllFilesCopied ? "√" : "×";
+                        lvStatus.Items[i].SubItems[4].Text = string.Format("{0}/{1}", tmpFileSource.CopiedFileCount, tmpFileSource.TotalFileCount); // 文件进度
+                        lvStatus.Items[i].SubItems[5].Text = tmpFileSource.IsFlagFilesAllArrived ? "√" : "×";        // 标志到齐
+                        lvStatus.Items[i].SubItems[6].Text = tmpFileSource.IsAllFilesCopied ? "√" : "×";        // 标志到齐
+                        lvStatus.Items[i].SubItems[7].Text = tmpFileSource.IsAllCheckPassed ? "√" : "×";        // 标志到齐
                     }
 
                     if (tmpFileSource.IsRunning)
                     {
                         lvStatus.Items[i].BackColor = Color.LightBlue;
+                        lvStatus.Items[i].EnsureVisible();
                     }
                     else
                     {
@@ -196,6 +201,9 @@ namespace ClearfileCheck
                 // 0.循环FileSource列表
                 foreach (FileSource tmpFileSource in _manager.FileSourceList)
                 {
+                    if (tmpFileSource.IsAllCheckPassed)
+                        continue;
+
                     // 取消任务判断
                     if (bgWorker.CancellationPending)
                     {
@@ -300,7 +308,6 @@ namespace ClearfileCheck
                                 FileInfo[] fis = di.GetFiles();
                                 foreach (FileInfo tmpFileInfo in fis)
                                 {
-
                                     // 新建清算文件对象
                                     ClearFile clearFile = new ClearFile(tmpFileInfo.Name, tmpFileInfo.FullName, Path.Combine(Util.Filename_Date_Convert(tmpFileSource.DestPath), tmpFileInfo.Name));
                                     tmpFileSource.ClearFiles.Add(clearFile);
@@ -330,13 +337,8 @@ namespace ClearfileCheck
                                 {
                                     string tmpFilePattern_new = Util.Filename_Date_Convert(tmpFilePattern);
 
-                                    if(tmpFileSource.ClearFiles[i].FileName== "fsbz_a.b14")
-                                    {
-                                        int zzz = 123123;
-                                    }
 
-
-                                    // 目前带*号的没法匹配出来，要像个办法
+                                    // 目前带是正则表达式
                                     if (Regex.IsMatch(tmpFileSource.ClearFiles[i].FileName, tmpFilePattern_new, RegexOptions.IgnoreCase))
                                     {
                                         needDelete = true;
@@ -348,7 +350,6 @@ namespace ClearfileCheck
                                 {
                                     tmpFileSource.ClearFiles.RemoveAt(i);
                                 }
-
                             }
 
 
@@ -416,40 +417,39 @@ namespace ClearfileCheck
                     {
                         tmpFileSource.Status = FileSourceStatus.正在解压;
                         bgWorker.ReportProgress(1);
-                        foreach (string tmpUnzipPattern in tmpFileSource.FileUnzipPattern)
+
+                        foreach (ClearFile tmpClearFile in tmpFileSource.ClearFiles)
                         {
-                            DirectoryInfo di = new DirectoryInfo(Util.Filename_Date_Convert(tmpFileSource.DestPath));     // 目标文件夹
-
-                            FileInfo[] fis = di.GetFiles(Util.Filename_Date_Convert(tmpUnzipPattern), SearchOption.TopDirectoryOnly);
-                            foreach (FileInfo tmpFileInfo in fis)
+                            try
                             {
-                                try
+                                string fileExtension = Path.GetExtension(tmpClearFile.DestFilePath).ToLower();
+                                switch (fileExtension)
                                 {
-                                    // 解压
-                                    if (tmpUnzipPattern.ToLower().Contains("zip"))   // zip
-                                        Util.Decompress_zip(tmpFileInfo.FullName, Util.Filename_Date_Convert(tmpFileSource.DestPath));
-                                    else if (tmpUnzipPattern.ToLower().Contains("bz2"))  // bz2
-                                        Util.Decompress_bz2(tmpFileInfo.FullName, Util.Filename_Date_Convert(tmpFileSource.DestPath));
-                                    else
-                                        throw new Exception("程序无法处理此格式的压缩文件");
-                                }
-                                catch (Exception ex)
-                                {
-                                    // 日志报警
-                                    UserState us = new UserState(true, string.Format("文件源[{0}]，文件[{1}]解压发生错误发生错误:{2}", tmpFileSource.Name, tmpFileInfo.Name, ex.Message));
-                                    bgWorker.ReportProgress(1, us);
-                                }
-
-                                bgWorker.ReportProgress(1);
-                                Thread.Sleep(10);
-
-                                if (bgWorker.CancellationPending)   // 取消按钮，这个要换个位置
-                                {
-                                    e.Cancel = true;
-                                    return;
+                                    case ".zip":
+                                        Util.Decompress_zip(tmpClearFile.DestFilePath, Util.Filename_Date_Convert(tmpFileSource.DestPath));
+                                        break;
+                                    case ".bz2":
+                                        Util.Decompress_bz2(tmpClearFile.DestFilePath, Util.Filename_Date_Convert(tmpFileSource.DestPath));
+                                        break;
                                 }
                             }
+                            catch (Exception ex)
+                            {
+                                // 日志报警
+                                UserState us = new UserState(true, string.Format("文件源[{0}]，文件[{1}]解压发生错误发生错误:{2}", tmpFileSource.Name, tmpClearFile.FileName, ex.Message));
+                                bgWorker.ReportProgress(1, us);
+                            }
+
+                            bgWorker.ReportProgress(1);
+                            Thread.Sleep(10);
+
+                            if (bgWorker.CancellationPending)   // 取消按钮，这个要换个位置
+                            {
+                                e.Cancel = true;
+                                return;
+                            }
                         }
+
                     }
                     Thread.Sleep(100);
 
@@ -496,6 +496,12 @@ namespace ClearfileCheck
                                 {
                                     tmpClearFile.IsCopied = false;
                                 }
+
+
+                                if (tmpClearFile.IsCopied == true && tmpClearFile.IsCurDay == true && tmpClearFile.IsMD5Equal == true)
+                                    tmpClearFile.IsCheckPassed = true;
+                                else
+                                    tmpClearFile.IsCheckPassed = false;
                             }
                             catch (Exception ex)
                             {
@@ -517,7 +523,7 @@ namespace ClearfileCheck
 
                         }
 
-                        tmpFileSource.Status = FileSourceStatus.文件检查结束;
+                        tmpFileSource.Status = FileSourceStatus.完成;
                         bgWorker.ReportProgress(1);
                     }
                     Thread.Sleep(100);
