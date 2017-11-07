@@ -7,6 +7,7 @@ namespace ClearfileCheckManager
 {
     public enum FileSourceStatus
     {
+        尝试访问路径 = -1,
         禁用 = 0,
         未开始 = 1,
         源路径无法访问 = 2,

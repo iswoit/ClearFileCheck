@@ -14,7 +14,7 @@
 		<dest>D:\qsfile\zqqs\sh\</dest>
 		<flag>fsbz_a.mdd;fsbz_arjq.mdd;fsbz_b.mdd;fsbz_brjq.mdd;fsbz_dz.mdd;fsbz_op.mdd;fsbz_hk.mdd;fsbz_a2.mdd;fsbz_b2.mdd;fsbz_hkrjq.mdd</flag>
 		<pattern>*.mdd</pattern>
-		<nocopy>fsbz_*.mdd</nocopy>
+		<nocopy>fsbz_a.mdd;fsbz_arjq.mdd;fsbz_b.mdd;fsbz_brjq.mdd;fsbz_dz.mdd;fsbz_op.mdd;fsbz_hk.mdd;fsbz_a2.mdd;fsbz_b2.mdd;fsbz_hkrjq.mdd</nocopy>
 	</file_source>
 	<file_source>
 		<name>÷–µ«…Ó€⁄</name>

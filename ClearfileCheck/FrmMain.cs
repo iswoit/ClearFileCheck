@@ -227,6 +227,11 @@ namespace ClearfileCheck
                     /* 1.判断规则源路径是否存在
                      * 如果源路径都无法访问，就跳过这条规则
                      */
+
+                    tmpFileSource.Status = FileSourceStatus.尝试访问路径;
+                    bgWorker.ReportProgress(1);
+
+
                     if (!Directory.Exists(Util.Filename_Date_Convert(tmpFileSource.OriginPath)))
                     {
                         tmpFileSource.Status = FileSourceStatus.源路径无法访问;
