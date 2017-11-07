@@ -9,15 +9,15 @@ namespace ClearfileCheckManager
     {
         禁用 = 0,
         未开始 = 1,
-        路径无法访问 = 2,
+        源路径无法访问 = 2,
         标志文件未收齐 = 3,
         标志文件已收齐 = 4,
         正在获取文件列表 = 5,
         文件列表获取完成 = 6,
         文件复制中 = 7,
         文件复制完成 = 8,
-        正在解压=9,
-        正在检查文件 =10,
+        正在解压 = 9,
+        正在检查文件 = 10,
         文件检查结束 = 11
     }
 
@@ -40,6 +40,8 @@ namespace ClearfileCheckManager
 
         private bool _isFileListAcquired;       // 清算文件列表是否已获取
         private List<ClearFile> _clearFiles;    // 清算文件列表
+
+        private bool _isRunning = false;
 
 
         public FileSource(string enable, string name, string originPath, string destPath, string flagFiles, string filePattern, string fileUnzipPattern)
@@ -216,6 +218,13 @@ namespace ClearfileCheckManager
 
                 return TotalFileCount == CopiedFileCount;
             }
+        }
+
+
+        public bool IsRunning
+        {
+            get { return _isRunning; }
+            set { _isRunning = value; }
         }
 
         #endregion 属性

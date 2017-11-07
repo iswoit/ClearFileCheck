@@ -12,7 +12,7 @@ namespace ClearfileCheckManager
         private bool _isCopied;             // 是否已复制
         private bool? _isCurDate;           // 是否当天文件
         private bool? _isMD5Equal;          // MD5一致
-
+        private List<string> _unzipedFiles; // 被解压的文件列表（还没用到）
 
         public ClearFile(string filename, string sourceFileName, string destFileName)
         {
@@ -22,6 +22,7 @@ namespace ClearfileCheckManager
             _isCopied = false;
             _isCurDate = null;
             _isMD5Equal = null;
+            _unzipedFiles = new List<string>();
         }
 
         #region 属性

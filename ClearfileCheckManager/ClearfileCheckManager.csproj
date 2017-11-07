@@ -43,6 +43,7 @@
     <Compile Include="Manager.cs" />
     <Compile Include="Model\ClearFile.cs" />
     <Compile Include="Model\FileSource.cs" />
+    <Compile Include="Model\UserState.cs" />
     <Compile Include="Util\DoubleBufferListView .cs">
       <SubType>Component</SubType>
     </Compile>

@@ -112,7 +112,9 @@ namespace ClearfileCheckManager
             {
                 Directory.CreateDirectory(targetPath);
             }
-            using (ZipInputStream s = new ZipInputStream(File.OpenRead(sourceFile)))
+            //File.OpenRead(sourceFile)
+            //new FileStream(sourceFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
+            using (ZipInputStream s = new ZipInputStream(new FileStream(sourceFile, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
             {
                 ZipEntry theEntry;
                 while ((theEntry = s.GetNextEntry()) != null)
@@ -163,7 +165,9 @@ namespace ClearfileCheckManager
             if (!Directory.Exists(dir))
                 Directory.CreateDirectory(dir);
             //创建压缩文件的输入流实例
-            using (BZip2InputStream zipFile = new BZip2InputStream(File.OpenRead(zipfilename)))
+            //File.OpenRead(zipfilename)
+            //new FileStream(zipfilename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)
+            using (BZip2InputStream zipFile = new BZip2InputStream(new FileStream(zipfilename, FileMode.Open, FileAccess.Read, FileShare.ReadWrite)))
             {
                 //创建目标文件的流
                 using (FileStream destFile = File.Open(dir + Path.GetFileNameWithoutExtension(zipfilename), FileMode.Create))

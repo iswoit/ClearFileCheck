@@ -41,8 +41,8 @@
 		<name>÷–µ«’Àªß</name>
 		<origin_path>D:\recv\</origin_path>
 		<dest_path>D:\qsfile\zqqs\zh\</dest_path>
-		<flag_files></flag_files>
-		<file_pattern></file_pattern>
+		<flag_files>hhr100033.mdd.bz2;hstgdz100033.mdd.bz2;khtj100033.mdd.bz2;qhzlbgtz_100033.mdd.bz2;syxx100033.mdd.bz2;xmzh100033.mdd.bz2;ymtzl100033.mdd.bz2;ywls100033.mdd.bz2;zhrz100033.mdd.bz2;zjqs100033.mdd.bz2;zqzhzl100033.mdd.bz2</flag_files>
+		<file_pattern>hhr100033.mdd.bz2;hstgdz100033.mdd.bz2;khtj100033.mdd.bz2;qhzlbgtz_100033.mdd.bz2;syxx100033.mdd.bz2;xmzh100033.mdd.bz2;ymtzl100033.mdd.bz2;ywls100033.mdd.bz2;zhrz100033.mdd.bz2;zjqs100033.mdd.bz2;zqzhzl100033.mdd.bz2</file_pattern>
 		<file_unzip_pattern>*.bz2</file_unzip_pattern>
 	</file_source>
 	<file_source enable="false">
