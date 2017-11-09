@@ -2,3 +2,4 @@ D:\Codes\C#\ClearfileCheck\ClearfileCheckManager\bin\Release\ClearfileCheckManag
 D:\Codes\C#\ClearfileCheck\ClearfileCheckManager\bin\Release\ClearfileCheckManager.pdb
 D:\Codes\C#\ClearfileCheck\ClearfileCheckManager\obj\Release\ClearfileCheckManager.dll
 D:\Codes\C#\ClearfileCheck\ClearfileCheckManager\obj\Release\ClearfileCheckManager.pdb
+D:\Codes\C#\ClearfileCheck\ClearfileCheckManager\bin\Release\ICSharpCode.SharpZipLib.dll

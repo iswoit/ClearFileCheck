@@ -224,6 +224,7 @@ namespace ClearfileCheck
 
                         // 日志报警
                         UserState us = new UserState(true, string.Format("文件源[{0}]，源路径[{1}]无法访问!", tmpFileSource.Name, Util.Filename_Date_Convert(tmpFileSource.OriginPath)));
+                        tmpFileSource.IsRunning = false;
                         bgWorker.ReportProgress(1, us);
 
                         continue;

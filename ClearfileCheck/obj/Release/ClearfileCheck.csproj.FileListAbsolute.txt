@@ -8,3 +8,4 @@ D:\Codes\C#\ClearfileCheck\ClearfileCheck\obj\Release\ClearfileCheck.Properties.
 D:\Codes\C#\ClearfileCheck\ClearfileCheck\obj\Release\ClearfileCheck.csproj.GenerateResource.Cache
 D:\Codes\C#\ClearfileCheck\ClearfileCheck\obj\Release\ClearfileCheck.exe
 D:\Codes\C#\ClearfileCheck\ClearfileCheck\obj\Release\ClearfileCheck.pdb
+D:\Codes\C#\ClearfileCheck\ClearfileCheck\bin\Release\ICSharpCode.SharpZipLib.dll
