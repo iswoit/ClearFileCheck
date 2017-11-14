@@ -46,6 +46,12 @@
             this.bgWorker = new System.ComponentModel.BackgroundWorker();
             this.label4 = new System.Windows.Forms.Label();
             this.timerExecute = new System.Windows.Forms.Timer(this.components);
+            this.btnStop = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.lbNextExecuteTime = new System.Windows.Forms.Label();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.statusTime = new System.Windows.Forms.ToolStripStatusLabel();
+            this.timerCurrentTime = new System.Windows.Forms.Timer(this.components);
             this.lvStatus = new ClearfileCheckManager.DoubleBufferListView();
             this.文件源 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -53,7 +59,7 @@
             this.状态 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.进度 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.是否收齐 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.btnStop = new System.Windows.Forms.Button();
+            this.statusStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbError
@@ -66,7 +72,7 @@
             this.tbError.Name = "tbError";
             this.tbError.ReadOnly = true;
             this.tbError.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
-            this.tbError.Size = new System.Drawing.Size(470, 134);
+            this.tbError.Size = new System.Drawing.Size(622, 111);
             this.tbError.TabIndex = 1;
             // 
             // label1
@@ -85,7 +91,7 @@
             this.btnExecute.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExecute.Image = global::ClearfileCheck.Properties.Resources.control_play;
             this.btnExecute.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExecute.Location = new System.Drawing.Point(518, 426);
+            this.btnExecute.Location = new System.Drawing.Point(680, 445);
             this.btnExecute.Name = "btnExecute";
             this.btnExecute.Size = new System.Drawing.Size(83, 27);
             this.btnExecute.TabIndex = 3;
@@ -119,7 +125,7 @@
             this.lvFile.GridLines = true;
             this.lvFile.Location = new System.Drawing.Point(12, 209);
             this.lvFile.Name = "lvFile";
-            this.lvFile.Size = new System.Drawing.Size(716, 120);
+            this.lvFile.Size = new System.Drawing.Size(865, 120);
             this.lvFile.TabIndex = 7;
             this.lvFile.UseCompatibleStateImageBehavior = false;
             this.lvFile.View = System.Windows.Forms.View.Details;
@@ -148,9 +154,9 @@
             // lbStatus
             // 
             this.lbStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbStatus.Location = new System.Drawing.Point(607, 386);
+            this.lbStatus.Location = new System.Drawing.Point(745, 405);
             this.lbStatus.Name = "lbStatus";
-            this.lbStatus.Size = new System.Drawing.Size(82, 23);
+            this.lbStatus.Size = new System.Drawing.Size(119, 23);
             this.lbStatus.TabIndex = 8;
             this.lbStatus.Text = "停止运行";
             this.lbStatus.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -159,17 +165,17 @@
             // 
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(500, 364);
+            this.label10.Location = new System.Drawing.Point(662, 364);
             this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(101, 12);
+            this.label10.Size = new System.Drawing.Size(77, 12);
             this.label10.TabIndex = 17;
-            this.label10.Text = "上一次执行时间：";
+            this.label10.Text = "上一次时间：";
             // 
             // lbLastExecuteTime
             // 
             this.lbLastExecuteTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lbLastExecuteTime.AutoSize = true;
-            this.lbLastExecuteTime.Location = new System.Drawing.Point(607, 364);
+            this.lbLastExecuteTime.Location = new System.Drawing.Point(745, 364);
             this.lbLastExecuteTime.Name = "lbLastExecuteTime";
             this.lbLastExecuteTime.Size = new System.Drawing.Size(23, 12);
             this.lbLastExecuteTime.TabIndex = 18;
@@ -196,7 +202,7 @@
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(560, 391);
+            this.label4.Location = new System.Drawing.Point(698, 410);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(41, 12);
             this.label4.TabIndex = 22;
@@ -204,8 +210,67 @@
             // 
             // timerExecute
             // 
-            this.timerExecute.Interval = 1000;
+            this.timerExecute.Interval = 500;
             this.timerExecute.Tick += new System.EventHandler(this.timerExecute_Tick);
+            // 
+            // btnStop
+            // 
+            this.btnStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.btnStop.Enabled = false;
+            this.btnStop.Image = global::ClearfileCheck.Properties.Resources.control_stop;
+            this.btnStop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.btnStop.Location = new System.Drawing.Point(781, 445);
+            this.btnStop.Name = "btnStop";
+            this.btnStop.Size = new System.Drawing.Size(83, 27);
+            this.btnStop.TabIndex = 23;
+            this.btnStop.Text = "点击停止";
+            this.btnStop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.btnStop.UseVisualStyleBackColor = true;
+            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(662, 383);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(77, 12);
+            this.label3.TabIndex = 24;
+            this.label3.Text = "下一次时间：";
+            // 
+            // lbNextExecuteTime
+            // 
+            this.lbNextExecuteTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbNextExecuteTime.AutoSize = true;
+            this.lbNextExecuteTime.Location = new System.Drawing.Point(745, 383);
+            this.lbNextExecuteTime.Name = "lbNextExecuteTime";
+            this.lbNextExecuteTime.Size = new System.Drawing.Size(23, 12);
+            this.lbNextExecuteTime.TabIndex = 25;
+            this.lbNextExecuteTime.Text = "N/A";
+            // 
+            // statusStrip
+            // 
+            this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.statusTime});
+            this.statusStrip.Location = new System.Drawing.Point(0, 487);
+            this.statusStrip.Name = "statusStrip";
+            this.statusStrip.Size = new System.Drawing.Size(889, 22);
+            this.statusStrip.TabIndex = 26;
+            this.statusStrip.Text = "statusStrip1";
+            // 
+            // statusTime
+            // 
+            this.statusTime.AutoSize = false;
+            this.statusTime.Name = "statusTime";
+            this.statusTime.Size = new System.Drawing.Size(163, 17);
+            this.statusTime.Text = "当前时间: ";
+            this.statusTime.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // timerCurrentTime
+            // 
+            this.timerCurrentTime.Enabled = true;
+            this.timerCurrentTime.Interval = 500;
+            this.timerCurrentTime.Tick += new System.EventHandler(this.timerCurrentTime_Tick);
             // 
             // lvStatus
             // 
@@ -222,7 +287,7 @@
             this.lvStatus.GridLines = true;
             this.lvStatus.Location = new System.Drawing.Point(12, 24);
             this.lvStatus.Name = "lvStatus";
-            this.lvStatus.Size = new System.Drawing.Size(716, 157);
+            this.lvStatus.Size = new System.Drawing.Size(865, 157);
             this.lvStatus.TabIndex = 19;
             this.lvStatus.UseCompatibleStateImageBehavior = false;
             this.lvStatus.View = System.Windows.Forms.View.Details;
@@ -256,26 +321,14 @@
             // 
             this.是否收齐.Text = "是否收齐";
             // 
-            // btnStop
-            // 
-            this.btnStop.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.btnStop.Enabled = false;
-            this.btnStop.Image = global::ClearfileCheck.Properties.Resources.control_stop;
-            this.btnStop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnStop.Location = new System.Drawing.Point(619, 426);
-            this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(83, 27);
-            this.btnStop.TabIndex = 23;
-            this.btnStop.Text = "点击停止";
-            this.btnStop.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.btnStop.UseVisualStyleBackColor = true;
-            this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
-            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(766, 509);
+            this.ClientSize = new System.Drawing.Size(889, 509);
+            this.Controls.Add(this.statusStrip);
+            this.Controls.Add(this.lbNextExecuteTime);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.btnStop);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label5);
@@ -292,6 +345,8 @@
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "清算文件拷贝";
+            this.statusStrip.ResumeLayout(false);
+            this.statusStrip.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -322,6 +377,11 @@
         private System.Windows.Forms.Timer timerExecute;
         private System.Windows.Forms.ColumnHeader cl2;
         private System.Windows.Forms.Button btnStop;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label lbNextExecuteTime;
+        private System.Windows.Forms.StatusStrip statusStrip;
+        private System.Windows.Forms.ToolStripStatusLabel statusTime;
+        private System.Windows.Forms.Timer timerCurrentTime;
     }
 }
 

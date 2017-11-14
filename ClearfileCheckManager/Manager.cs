@@ -49,6 +49,7 @@ namespace ClearfileCheckManager
                         string flagFiles = string.Empty;
                         string filePattern = string.Empty;
                         string fileUnzipPattern = string.Empty;
+                        string noCopy = string.Empty;
 
 
                         XmlElement xe = (XmlElement)tmpXnl;
@@ -57,23 +58,26 @@ namespace ClearfileCheckManager
                         {
                             switch (xe.ChildNodes[i].Name.ToLower().Trim())
                             {
-                                case "name":
+                                case "name":    // 配置名
                                     name = xe.ChildNodes[i].InnerText;
                                     break;
-                                case "origin_path":
+                                case "source":  // 源路径
                                     originPath = xe.ChildNodes[i].InnerText;
                                     break;
-                                case "dest_path":
+                                case "dest":    // 目标路径
                                     destPath = xe.ChildNodes[i].InnerText;
                                     break;
-                                case "flag_files":
+                                case "flag":    // 标志文件
                                     flagFiles = xe.ChildNodes[i].InnerText;
                                     break;
-                                case "file_pattern":
+                                case "pattern": // 拷贝文件
                                     filePattern = xe.ChildNodes[i].InnerText;
                                     break;
-                                case "file_unzip_pattern":
+                                case "unzip_pattern":  // 需要解压的文件
                                     fileUnzipPattern = xe.ChildNodes[i].InnerText;
+                                    break;
+                                case "nocopy":
+                                    noCopy= xe.ChildNodes[i].InnerText;
                                     break;
                             }
                         }
@@ -87,7 +91,8 @@ namespace ClearfileCheckManager
                             destPath.Trim(),
                             flagFiles.Trim(),
                             filePattern.Trim(),
-                            fileUnzipPattern.Trim());
+                            fileUnzipPattern.Trim(),
+                            noCopy);
 
                         // 创建目标路径
                         if (!Directory.Exists(destPath.Trim()))

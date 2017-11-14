@@ -11,6 +11,7 @@ using System.IO;
 using System.Threading;
 using System.Resources;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace ClearfileCheck
 {
@@ -222,10 +223,10 @@ namespace ClearfileCheck
                     {
                         tmpFileSource.Status = FileSourceStatus.源路径无法访问;
 
-                        // 日志报警
-                        UserState us = new UserState(true, string.Format("文件源[{0}]，源路径[{1}]无法访问!", tmpFileSource.Name, Util.Filename_Date_Convert(tmpFileSource.OriginPath)));
+                        //// 日志报警
+                        //UserState us = new UserState(true, string.Format("文件源[{0}]，源路径[{1}]无法访问!", tmpFileSource.Name, Util.Filename_Date_Convert(tmpFileSource.OriginPath)));
                         tmpFileSource.IsRunning = false;
-                        bgWorker.ReportProgress(1, us);
+                        //bgWorker.ReportProgress(1, us);
 
                         continue;
                     }
@@ -287,7 +288,6 @@ namespace ClearfileCheck
                     {
                         try
                         {
-
                             tmpFileSource.IsFileListAcquired = false;
                             tmpFileSource.Status = FileSourceStatus.正在获取文件列表;
 
@@ -300,6 +300,7 @@ namespace ClearfileCheck
                                 FileInfo[] fis = di.GetFiles();
                                 foreach (FileInfo tmpFileInfo in fis)
                                 {
+
                                     // 新建清算文件对象
                                     ClearFile clearFile = new ClearFile(tmpFileInfo.Name, tmpFileInfo.FullName, Path.Combine(Util.Filename_Date_Convert(tmpFileSource.DestPath), tmpFileInfo.Name));
                                     tmpFileSource.ClearFiles.Add(clearFile);
@@ -317,6 +318,37 @@ namespace ClearfileCheck
                                         tmpFileSource.ClearFiles.Add(clearFile);
                                     }
                                 }
+                            }
+
+
+                            // 2017-11-14 把tmpFileSource.ClearFiles中每个文件遍历所有规则，删除不需要拷贝的文件
+                            // 通过不拷贝文件规则的过滤
+                            for (int i = tmpFileSource.ClearFiles.Count - 1; i >= 0; i--)
+                            {
+                                bool needDelete = false;
+                                foreach (string tmpFilePattern in tmpFileSource.NoCopyPattern)
+                                {
+                                    string tmpFilePattern_new = Util.Filename_Date_Convert(tmpFilePattern);
+
+                                    if(tmpFileSource.ClearFiles[i].FileName== "fsbz_a.b14")
+                                    {
+                                        int zzz = 123123;
+                                    }
+
+
+                                    // 目前带*号的没法匹配出来，要像个办法
+                                    if (Regex.IsMatch(tmpFileSource.ClearFiles[i].FileName, tmpFilePattern_new, RegexOptions.IgnoreCase))
+                                    {
+                                        needDelete = true;
+                                        break;
+                                    }
+                                }
+
+                                if (needDelete)
+                                {
+                                    tmpFileSource.ClearFiles.RemoveAt(i);
+                                }
+
                             }
 
 
@@ -345,13 +377,13 @@ namespace ClearfileCheck
                         {
                             try
                             {
-                                if (File.Exists(tmpClearFile.DestFileName))
+                                if (File.Exists(tmpClearFile.DestFilePath))
                                 {
                                     tmpClearFile.IsCopied = true;
                                 }
                                 else
                                 {
-                                    File.Copy(tmpClearFile.SourceFileName, tmpClearFile.DestFileName, true);
+                                    File.Copy(tmpClearFile.SourceFilePath, tmpClearFile.DestFilePath, true);
                                     tmpClearFile.IsCopied = true;
                                 }
                             }
@@ -433,20 +465,28 @@ namespace ClearfileCheck
                         {
                             try
                             {
-
-                                if (File.Exists(tmpClearFile.SourceFileName) && File.Exists(tmpClearFile.DestFileName))
+                                if (File.Exists(tmpClearFile.SourceFilePath) && File.Exists(tmpClearFile.DestFilePath))
                                 {
                                     tmpClearFile.IsCopied = true;
 
-                                    FileInfo fi_dest = new FileInfo(tmpClearFile.DestFileName);
-                                    if (fi_dest.LastWriteTime.Date == DateTime.Now.Date)
+                                    // 当天文件判断
+
+                                    if (Util.Filename_Contain_DateString(tmpClearFile.FileName))    // 有yyymmdd等之类的标志不判断文件修改日期
+                                    {
                                         tmpClearFile.IsCurDay = true;
+                                    }
                                     else
-                                        tmpClearFile.IsCurDay = false;
+                                    {
+                                        FileInfo fi_dest = new FileInfo(tmpClearFile.DestFilePath);
+                                        if (fi_dest.LastWriteTime.Date == DateTime.Now.Date)
+                                            tmpClearFile.IsCurDay = true;
+                                        else
+                                            tmpClearFile.IsCurDay = false;
+                                    }
 
-
-                                    string md5Source = Util.GetMD5HashFromFile(tmpClearFile.SourceFileName);
-                                    string md5Dest = Util.GetMD5HashFromFile(tmpClearFile.DestFileName);
+                                    // MD5码一致
+                                    string md5Source = Util.GetMD5HashFromFile(tmpClearFile.SourceFilePath);
+                                    string md5Dest = Util.GetMD5HashFromFile(tmpClearFile.DestFilePath);
                                     if (md5Source == md5Dest)
                                         tmpClearFile.IsMD5Equal = true;
                                     else
@@ -546,17 +586,22 @@ namespace ClearfileCheck
                 UpdateFileListInfo();
 
                 // 处理状态标签
-                lbStatus.Text = "执行完成";
+                lbStatus.Text = "完成，等待下一轮";
                 lbStatus.BackColor = Color.ForestGreen;
             }
 
 
-            btnExecute.Enabled = true;
-            btnStop.Enabled = false;
-
 
             DateTime dtNow = DateTime.Now;
+            _manager.LastCheckTime = dtNow;
             lbLastExecuteTime.Text = dtNow.ToString("HH:mm:ss");
+
+
+            int secondSpan = 10;
+            DateTime dtNext = dtNow.AddSeconds(secondSpan);
+            _manager.NextCheckTime = dtNext;
+            lbNextExecuteTime.Text = dtNext.ToString("HH:mm:ss");
+
         }
         #endregion
 
@@ -579,21 +624,16 @@ namespace ClearfileCheck
              * 5.文件md5判断
              */
 
+            btnExecute.Enabled = false;
+            btnStop.Enabled = true;
 
-            if (!bgWorker.IsBusy)
-            {
 
-                lbStatus.Text = "执行中...";
-                lbStatus.BackColor = Color.Yellow;
-                btnExecute.Enabled = false;
-                btnStop.Enabled = true;
 
-                lvFile.Items.Clear();
-                lvFile.Items.Add("等待执行结果...");
-                lvFile.Columns[0].Width = -1;
+            timerExecute.Enabled = true;
+            bgWorker.RunWorkerAsync();      // 点击按钮强制执行
+            lbStatus.Text = "执行中...";
+            lbStatus.BackColor = Color.Yellow;
 
-                bgWorker.RunWorkerAsync();
-            }
 
         }
 
@@ -607,6 +647,18 @@ namespace ClearfileCheck
         {
             if (bgWorker.IsBusy)
                 bgWorker.CancelAsync();
+            else
+            {
+                lbStatus.Text = "停止运行";
+                lbStatus.BackColor = SystemColors.Control;
+            }
+
+            timerExecute.Enabled = false;
+
+
+            btnStop.Enabled = false;
+            btnExecute.Enabled = true;
+
         }
         #endregion
 
@@ -619,7 +671,29 @@ namespace ClearfileCheck
         private void timerExecute_Tick(object sender, EventArgs e)
         {
 
+
+            if (_manager.LastCheckTime == null || DateTime.Now >= _manager.NextCheckTime)
+            {
+                if (!bgWorker.IsBusy)
+                {
+
+                    lbStatus.Text = "执行中...";
+                    lbStatus.BackColor = Color.Yellow;
+                    btnExecute.Enabled = false;
+                    btnStop.Enabled = true;
+
+                    lvFile.Items.Clear();
+                    lvFile.Items.Add("等待执行结果...");
+                    lvFile.Columns[0].Width = -1;
+
+                    bgWorker.RunWorkerAsync();
+                }
+            }
         }
 
+        private void timerCurrentTime_Tick(object sender, EventArgs e)
+        {
+            statusTime.Text = string.Format(@"当前时间: {0}", DateTime.Now.ToString("HH:mm:ss"));
+        }
     }
 }

@@ -55,6 +55,26 @@ namespace ClearfileCheckManager
 
 
         /// <summary>
+        /// 文件名里是否有当天的日期
+        /// </summary>
+        /// <param name="fileName"></param>
+        /// <returns></returns>
+        public static bool Filename_Contain_DateString(string fileName)
+        {
+            DateTime dtNow = DateTime.Now;
+            string yyyymmdd_replacement = dtNow.ToString("yyyyMMdd");
+            string mmdd_replacement = string.Format("{0}{1}", dtNow.Month.ToString().PadLeft(2, '0'), dtNow.Day.ToString().PadLeft(2, '0'));
+            string mdd_replacement = string.Format("{0}{1}", arr_mdd_convert[dtNow.Month - 1], dtNow.Day.ToString().PadLeft(2, '0'));
+
+
+            if (Regex.IsMatch(fileName, yyyymmdd_replacement, RegexOptions.IgnoreCase) || Regex.IsMatch(fileName, mmdd_replacement, RegexOptions.IgnoreCase) || Regex.IsMatch(fileName, mdd_replacement, RegexOptions.IgnoreCase))
+                return true;
+            else
+                return false;
+        }
+
+
+        /// <summary>
         /// 获取文件md5码
         /// </summary>
         /// <param name="fileName"></param>

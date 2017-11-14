@@ -34,6 +34,7 @@ namespace ClearfileCheckManager
         private List<string> _flagFilesList;    // 标志文件列表
         private List<string> _filePattern;      // 文件样式
         private List<string> _fileUnzipPattern;        // 需要解压的文件列表
+        private List<string> _listNoCopyPattern;           // 不需要拷贝的文件列表(可能包含*号通配，mdd日期通配)
 
         private bool _isFlagFilesAllArrived;    // 所有标志文件是否已就绪
         private List<string> _flagFilesMissingList;     // 还缺失的标志文件列表
@@ -44,7 +45,8 @@ namespace ClearfileCheckManager
         private bool _isRunning = false;
 
 
-        public FileSource(string enable, string name, string originPath, string destPath, string flagFiles, string filePattern, string fileUnzipPattern)
+
+        public FileSource(string enable, string name, string originPath, string destPath, string flagFiles, string filePattern, string fileUnzipPattern, string noCopy)
         {
             // 配置是否启用（只有false是禁止，其他都是默认启用）
             bool convertResult = bool.TryParse(enable, out _enable);
@@ -55,7 +57,7 @@ namespace ClearfileCheckManager
             _destPath = Util.Filename_Date_Convert(destPath);
 
             // 标志文件特征
-            string[] arr_flagfiles = flagFiles.Split(new char[] { ';', '|' });
+            string[] arr_flagfiles = flagFiles.Split(new char[] { '|', ';', '；', ',', '，' });
             _flagFilesList = new List<string>();
             foreach (string strTmp in arr_flagfiles)
             {
@@ -64,7 +66,7 @@ namespace ClearfileCheckManager
             }
 
             // 清算文件特征
-            string[] arr_file_pattern = filePattern.Split(new char[] { ';', '|' });
+            string[] arr_file_pattern = filePattern.Split(new char[] { '|', ';', '；', ',', '，' });
             _filePattern = new List<string>();
             foreach (string strTmp in arr_file_pattern)
             {
@@ -73,7 +75,7 @@ namespace ClearfileCheckManager
             }
 
             // 需要解压的文件列表
-            string[] arr_file_unzip_pattern = fileUnzipPattern.Split(new char[] { ';', '|' });
+            string[] arr_file_unzip_pattern = fileUnzipPattern.Split(new char[] { '|', ';', '；', ',', '，' });
             _fileUnzipPattern = new List<string>();
             foreach (string strTmp in arr_file_unzip_pattern)
             {
@@ -81,6 +83,14 @@ namespace ClearfileCheckManager
                     _fileUnzipPattern.Add(strTmp.Trim());
             }
 
+            // 不需要拷贝的模式列表
+            string[] arr_list_no_copy_pattern = noCopy.Split(new char[] { '|', ';', '；', ',', '，' });
+            _listNoCopyPattern = new List<string>();
+            foreach (string strTmp in arr_list_no_copy_pattern)
+            {
+                if (!string.IsNullOrEmpty(strTmp.Trim()))
+                    _listNoCopyPattern.Add(strTmp.Trim());
+            }
 
             _isFlagFilesAllArrived = false;
             _flagFilesMissingList = new List<string>();
@@ -144,6 +154,16 @@ namespace ClearfileCheckManager
         {
             get { return _fileUnzipPattern; }
             set { _fileUnzipPattern = value; }
+        }
+
+
+        /// <summary>
+        /// 不需要拷贝的文件模式列表
+        /// </summary>
+        public List<string> NoCopyPattern
+        {
+            get { return _listNoCopyPattern; }
+            set { _listNoCopyPattern = value; }
         }
 
         public bool IsFlagFilesAllArrived
@@ -221,6 +241,9 @@ namespace ClearfileCheckManager
         }
 
 
+        /// <summary>
+        /// 任务是否在运行
+        /// </summary>
         public bool IsRunning
         {
             get { return _isRunning; }

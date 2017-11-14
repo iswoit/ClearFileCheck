@@ -7,8 +7,8 @@ namespace ClearfileCheckManager
     public class ClearFile
     {
         private string _fileName;           // 文件名
-        private string _sourceFileName;     // 源文件
-        private string _destFileName;       // 目的地
+        private string _sourceFilePath;     // 源文件
+        private string _destFilePath;       // 目的地
         private bool _isCopied;             // 是否已复制
         private bool? _isCurDate;           // 是否当天文件
         private bool? _isMD5Equal;          // MD5一致
@@ -17,8 +17,8 @@ namespace ClearfileCheckManager
         public ClearFile(string filename, string sourceFileName, string destFileName)
         {
             _fileName = filename;
-            _sourceFileName = sourceFileName;
-            _destFileName = destFileName;
+            _sourceFilePath = sourceFileName;
+            _destFilePath = destFileName;
             _isCopied = false;
             _isCurDate = null;
             _isMD5Equal = null;
@@ -32,30 +32,45 @@ namespace ClearfileCheckManager
             set { _fileName = value; }
         }
 
-        public string SourceFileName
+        /// <summary>
+        /// 清算文件源路径
+        /// </summary>
+        public string SourceFilePath
         {
-            get { return _sourceFileName; }
-            set { _sourceFileName = value; }
+            get { return _sourceFilePath; }
+            set { _sourceFilePath = value; }
         }
 
-        public string DestFileName
+        /// <summary>
+        /// 清算文件目的路径
+        /// </summary>
+        public string DestFilePath
         {
-            get { return _destFileName; }
-            set { _destFileName = value; }
+            get { return _destFilePath; }
+            set { _destFilePath = value; }
         }
 
+        /// <summary>
+        /// 清算文件是否已拷贝
+        /// </summary>
         public bool IsCopied
         {
             get { return _isCopied; }
             set { _isCopied = value; }
         }
 
+        /// <summary>
+        /// 清算文件是否是当日
+        /// </summary>
         public bool? IsCurDay
         {
             get { return _isCurDate; }
             set { _isCurDate = value; }
         }
 
+        /// <summary>
+        /// 清算文件源和目的md5是否一致
+        /// </summary>
         public bool? IsMD5Equal
         {
             get { return _isMD5Equal; }
