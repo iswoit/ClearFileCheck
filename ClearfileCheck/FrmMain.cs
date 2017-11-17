@@ -201,7 +201,7 @@ namespace ClearfileCheck
                 // 0.循环FileSource列表
                 foreach (FileSource tmpFileSource in _manager.FileSourceList)
                 {
-                    if (tmpFileSource.IsAllCheckPassed)
+                    if (tmpFileSource.IsAllCheckPassed && tmpFileSource.FlagFilesList.Count > 0)
                         continue;
 
                     // 取消任务判断
@@ -230,6 +230,8 @@ namespace ClearfileCheck
 
                     tmpFileSource.Status = FileSourceStatus.尝试访问路径;
                     bgWorker.ReportProgress(1);
+
+
 
 
                     if (!Directory.Exists(Util.Filename_Date_Convert(tmpFileSource.OriginPath)))
@@ -608,7 +610,7 @@ namespace ClearfileCheck
             lbLastExecuteTime.Text = dtNow.ToString("HH:mm:ss");
 
 
-            int secondSpan = 10;
+            int secondSpan = Int32.Parse(numSpan.Value.ToString());
             DateTime dtNext = dtNow.AddSeconds(secondSpan);
             _manager.NextCheckTime = dtNext;
             lbNextExecuteTime.Text = dtNext.ToString("HH:mm:ss");
@@ -705,6 +707,15 @@ namespace ClearfileCheck
         private void timerCurrentTime_Tick(object sender, EventArgs e)
         {
             statusTime.Text = string.Format(@"当前时间: {0}", DateTime.Now.ToString("HH:mm:ss"));
+        }
+
+        private void FrmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (bgWorker.IsBusy)
+            {
+                MessageBox.Show("请停止任务后再关闭程序，以防解压文件出现损坏！");
+                e.Cancel = true;
+            }
         }
     }
 }

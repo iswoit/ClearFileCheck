@@ -78,15 +78,6 @@ namespace ClearfileCheckManager
                             }
                         }
 
-                        bool _enable;
-                        // 配置是否启用（只有false是禁止，其他都是默认启用）
-                        bool convertResult = bool.TryParse(enable, out _enable);
-                        if (convertResult == false)
-                            _enable = true;
-                        if (_enable == false)
-                        {
-                            continue;
-                        }
 
                         // 生成对象
                         FileSource tmpFileSource = new FileSource(
