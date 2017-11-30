@@ -201,7 +201,7 @@ namespace ClearfileCheck
                 // 0.循环FileSource列表
                 foreach (FileSource tmpFileSource in _manager.FileSourceList)
                 {
-                    if (tmpFileSource.IsAllCheckPassed && tmpFileSource.FlagFilesList.Count > 0)
+                    if (tmpFileSource.IsAllCheckPassed)
                         continue;
 
                     // 取消任务判断
