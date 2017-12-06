@@ -49,6 +49,7 @@ namespace ClearfileCheckManager
                         string flagFiles = string.Empty;
                         string filePattern = string.Empty;
                         string noCopy = string.Empty;
+                        string canDelay = string.Empty;
 
 
                         XmlElement xe = (XmlElement)tmpXnl;
@@ -75,6 +76,9 @@ namespace ClearfileCheckManager
                                 case "nocopy":
                                     noCopy = xe.ChildNodes[i].InnerText;
                                     break;
+                                case "candelay":
+                                    canDelay = xe.ChildNodes[i].InnerText;
+                                    break;
                             }
                         }
 
@@ -87,7 +91,9 @@ namespace ClearfileCheckManager
                             destPath.Trim(),
                             flagFiles.Trim(),
                             filePattern.Trim(),
-                            noCopy);
+                            noCopy.Trim(),
+                            canDelay.Trim()
+                            );
 
                         // 创建目标路径
                         if (!Directory.Exists(destPath.Trim()))
@@ -126,6 +132,31 @@ namespace ClearfileCheckManager
         {
             get { return _checkMinuteSpan; }
             set { _checkMinuteSpan = value; }
+        }
+
+
+        /// <summary>
+        /// 是否可以开始清算。enable=true的，所有checkpass=true，而且是
+        /// </summary>
+        public bool CanStartClear
+        {
+            get
+            {
+                foreach (FileSource tmpFS in FileSourceList)
+                {
+                    if (tmpFS.Enable == true)
+                    {
+                        if (tmpFS.CanDelay == false && tmpFS.IsAllCheckPassed == false)
+                        {
+                            return false;
+                        }
+                    }
+                }
+
+
+                return true;
+            }
+
         }
 
         #endregion

@@ -86,6 +86,7 @@ namespace ClearfileCheck
                 lvi.SubItems.Add(string.Empty);     // 标志到齐
                 lvi.SubItems.Add(string.Empty);     // 拷贝完成
                 lvi.SubItems.Add(string.Empty);     // 检查通过
+                lvi.SubItems.Add(_manager.FileSourceList[i].CanDelay?"不必":"必须收齐");     // 是否清算必须收齐
 
                 lvi.Tag = _manager.FileSourceList[i];
                 lvStatus.Items.Add(lvi);
@@ -122,6 +123,7 @@ namespace ClearfileCheck
                         lvStatus.Items[i].SubItems[6].Text = tmpFileSource.IsAllFilesCopied ? "√" : "×";        // 标志到齐
                         lvStatus.Items[i].SubItems[7].Text = tmpFileSource.IsAllCheckPassed ? "√" : "×";        // 标志到齐
                     }
+
 
                     if (tmpFileSource.IsRunning)
                     {
@@ -614,6 +616,8 @@ namespace ClearfileCheck
             DateTime dtNext = dtNow.AddSeconds(secondSpan);
             _manager.NextCheckTime = dtNext;
             lbNextExecuteTime.Text = dtNext.ToString("HH:mm:ss");
+
+            lbCanClearStart.Text = _manager.CanStartClear ? "√" : "×";
 
         }
         #endregion

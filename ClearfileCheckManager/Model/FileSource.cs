@@ -42,11 +42,14 @@ namespace ClearfileCheckManager
         private bool _isFileListAcquired;       // 清算文件列表是否已获取
         private List<ClearFile> _clearFiles;    // 清算文件列表
 
+        private bool _canDelay;                 // 是否可延迟，用于自动化
+
+
         private bool _isRunning = false;
 
 
 
-        public FileSource(string enable, string name, string originPath, string destPath, string flagFiles, string filePattern, string noCopy)
+        public FileSource(string enable, string name, string originPath, string destPath, string flagFiles, string filePattern, string noCopy, string canDelay)
         {
             // 配置是否启用（只有false是禁止，其他都是默认启用）
             bool convertResult = bool.TryParse(enable, out _enable);
@@ -94,6 +97,12 @@ namespace ClearfileCheckManager
                 Status = FileSourceStatus.禁用;
             else
                 Status = FileSourceStatus.未开始;
+
+
+            // 是否可延迟
+            convertResult = bool.TryParse(canDelay, out _canDelay);
+            if (convertResult == false)
+                _canDelay = false;
         }
 
         #region 属性
@@ -294,6 +303,12 @@ namespace ClearfileCheckManager
             IsFlagFilesAllArrived = true;
             return true;
         }
+
+        public bool CanDelay
+        {
+            get { return _canDelay; }
+        }
+
         #endregion 方法
     }
 }

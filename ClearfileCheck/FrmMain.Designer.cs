@@ -63,8 +63,15 @@
             this.检查通过 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.numSpan = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.label7 = new System.Windows.Forms.Label();
+            this.lbCanClearStart = new System.Windows.Forms.Label();
+            this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numSpan)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // tbError
@@ -72,7 +79,7 @@
             this.tbError.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tbError.BackColor = System.Drawing.Color.White;
-            this.tbError.Location = new System.Drawing.Point(12, 430);
+            this.tbError.Location = new System.Drawing.Point(12, 465);
             this.tbError.Multiline = true;
             this.tbError.Name = "tbError";
             this.tbError.ReadOnly = true;
@@ -85,7 +92,7 @@
             this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 415);
+            this.label1.Location = new System.Drawing.Point(10, 450);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(65, 12);
             this.label1.TabIndex = 2;
@@ -96,7 +103,7 @@
             this.btnExecute.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.btnExecute.Image = global::ClearfileCheck.Properties.Resources.control_play;
             this.btnExecute.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnExecute.Location = new System.Drawing.Point(766, 499);
+            this.btnExecute.Location = new System.Drawing.Point(970, 494);
             this.btnExecute.Name = "btnExecute";
             this.btnExecute.Size = new System.Drawing.Size(83, 27);
             this.btnExecute.TabIndex = 3;
@@ -130,7 +137,7 @@
             this.lvFile.GridLines = true;
             this.lvFile.Location = new System.Drawing.Point(12, 305);
             this.lvFile.Name = "lvFile";
-            this.lvFile.Size = new System.Drawing.Size(1084, 104);
+            this.lvFile.Size = new System.Drawing.Size(1084, 112);
             this.lvFile.TabIndex = 7;
             this.lvFile.UseCompatibleStateImageBehavior = false;
             this.lvFile.View = System.Windows.Forms.View.Details;
@@ -159,7 +166,7 @@
             // lbStatus
             // 
             this.lbStatus.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbStatus.Location = new System.Drawing.Point(831, 459);
+            this.lbStatus.Location = new System.Drawing.Point(828, 474);
             this.lbStatus.Name = "lbStatus";
             this.lbStatus.Size = new System.Drawing.Size(119, 23);
             this.lbStatus.TabIndex = 8;
@@ -170,7 +177,7 @@
             // 
             this.label10.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(748, 418);
+            this.label10.Location = new System.Drawing.Point(745, 433);
             this.label10.Name = "label10";
             this.label10.Size = new System.Drawing.Size(77, 12);
             this.label10.TabIndex = 17;
@@ -180,7 +187,7 @@
             // 
             this.lbLastExecuteTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lbLastExecuteTime.AutoSize = true;
-            this.lbLastExecuteTime.Location = new System.Drawing.Point(831, 418);
+            this.lbLastExecuteTime.Location = new System.Drawing.Point(828, 433);
             this.lbLastExecuteTime.Name = "lbLastExecuteTime";
             this.lbLastExecuteTime.Size = new System.Drawing.Size(23, 12);
             this.lbLastExecuteTime.TabIndex = 18;
@@ -189,7 +196,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(12, 9);
+            this.label5.Location = new System.Drawing.Point(12, 34);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(89, 12);
             this.label5.TabIndex = 20;
@@ -207,7 +214,7 @@
             // 
             this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(784, 464);
+            this.label4.Location = new System.Drawing.Point(781, 479);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(41, 12);
             this.label4.TabIndex = 22;
@@ -224,7 +231,7 @@
             this.btnStop.Enabled = false;
             this.btnStop.Image = global::ClearfileCheck.Properties.Resources.control_stop;
             this.btnStop.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.btnStop.Location = new System.Drawing.Point(867, 499);
+            this.btnStop.Location = new System.Drawing.Point(970, 527);
             this.btnStop.Name = "btnStop";
             this.btnStop.Size = new System.Drawing.Size(83, 27);
             this.btnStop.TabIndex = 23;
@@ -237,7 +244,7 @@
             // 
             this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(748, 437);
+            this.label3.Location = new System.Drawing.Point(745, 452);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(77, 12);
             this.label3.TabIndex = 24;
@@ -247,7 +254,7 @@
             // 
             this.lbNextExecuteTime.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.lbNextExecuteTime.AutoSize = true;
-            this.lbNextExecuteTime.Location = new System.Drawing.Point(831, 437);
+            this.lbNextExecuteTime.Location = new System.Drawing.Point(828, 452);
             this.lbNextExecuteTime.Name = "lbNextExecuteTime";
             this.lbNextExecuteTime.Size = new System.Drawing.Size(23, 12);
             this.lbNextExecuteTime.TabIndex = 25;
@@ -257,7 +264,7 @@
             // 
             this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.statusTime});
-            this.statusStrip.Location = new System.Drawing.Point(0, 541);
+            this.statusStrip.Location = new System.Drawing.Point(0, 576);
             this.statusStrip.Name = "statusStrip";
             this.statusStrip.Size = new System.Drawing.Size(1108, 22);
             this.statusStrip.TabIndex = 26;
@@ -289,12 +296,13 @@
             this.进度,
             this.标志到齐,
             this.拷贝完成,
-            this.检查通过});
+            this.检查通过,
+            this.columnHeader3});
             this.lvStatus.FullRowSelect = true;
             this.lvStatus.GridLines = true;
-            this.lvStatus.Location = new System.Drawing.Point(12, 24);
+            this.lvStatus.Location = new System.Drawing.Point(12, 61);
             this.lvStatus.Name = "lvStatus";
-            this.lvStatus.Size = new System.Drawing.Size(1084, 263);
+            this.lvStatus.Size = new System.Drawing.Size(1084, 226);
             this.lvStatus.TabIndex = 19;
             this.lvStatus.UseCompatibleStateImageBehavior = false;
             this.lvStatus.View = System.Windows.Forms.View.Details;
@@ -341,7 +349,8 @@
             // 
             // numSpan
             // 
-            this.numSpan.Location = new System.Drawing.Point(1013, 415);
+            this.numSpan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.numSpan.Location = new System.Drawing.Point(1010, 430);
             this.numSpan.Maximum = new decimal(new int[] {
             999,
             0,
@@ -366,20 +375,73 @@
             // 
             this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(942, 418);
+            this.label6.Location = new System.Drawing.Point(939, 433);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(65, 12);
             this.label6.TabIndex = 28;
             this.label6.Text = "间隔(秒)：";
             // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuHelp});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1108, 25);
+            this.menuStrip1.TabIndex = 29;
+            this.menuStrip1.Text = "menuStrip";
+            // 
+            // menuHelp
+            // 
+            this.menuHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuHelpAbout});
+            this.menuHelp.Name = "menuHelp";
+            this.menuHelp.Size = new System.Drawing.Size(44, 21);
+            this.menuHelp.Text = "帮助";
+            // 
+            // menuHelpAbout
+            // 
+            this.menuHelpAbout.Name = "menuHelpAbout";
+            this.menuHelpAbout.Size = new System.Drawing.Size(152, 22);
+            this.menuHelpAbout.Text = "关于...";
+            // 
+            // label7
+            // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(709, 509);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(113, 12);
+            this.label7.TabIndex = 30;
+            this.label7.Text = "是否可以开始清算：";
+            // 
+            // lbCanClearStart
+            // 
+            this.lbCanClearStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbCanClearStart.AutoSize = true;
+            this.lbCanClearStart.Location = new System.Drawing.Point(828, 509);
+            this.lbCanClearStart.Name = "lbCanClearStart";
+            this.lbCanClearStart.Size = new System.Drawing.Size(17, 12);
+            this.lbCanClearStart.TabIndex = 31;
+            this.lbCanClearStart.Text = "×";
+            // 
+            // columnHeader3
+            // 
+            this.columnHeader3.Text = "清算开始必须收齐";
+            this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.columnHeader3.Width = 110;
+            // 
             // FrmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1108, 563);
+            this.ClientSize = new System.Drawing.Size(1108, 598);
+            this.Controls.Add(this.lbCanClearStart);
+            this.Controls.Add(this.label7);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.numSpan);
             this.Controls.Add(this.statusStrip);
+            this.Controls.Add(this.menuStrip1);
             this.Controls.Add(this.lbNextExecuteTime);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.btnStop);
@@ -395,6 +457,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.tbError);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "FrmMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "清算文件拷贝";
@@ -402,6 +465,8 @@
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numSpan)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -441,6 +506,12 @@
         private System.Windows.Forms.ColumnHeader 检查通过;
         private System.Windows.Forms.NumericUpDown numSpan;
         private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem menuHelp;
+        private System.Windows.Forms.ToolStripMenuItem menuHelpAbout;
+        private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.Label lbCanClearStart;
+        private System.Windows.Forms.ColumnHeader columnHeader3;
     }
 }
 

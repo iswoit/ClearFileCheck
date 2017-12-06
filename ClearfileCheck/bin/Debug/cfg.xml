@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="GBK"?>
 <sources>
 	<!--配置-->
-	<file_source enable="true">
-		<name>z股转</name>
-		<source>\\10.32.108.37\d$\nq\</source>
-		<dest>D:\qsfile\zqqs\nq\</dest>
-		<flag></flag>
-		<pattern></pattern>
+	<file_source enable="false">
+		<name>股转</name><!--名称-->
+		<source>\\10.32.108.37\d$\nq\</source><!--源路径-->
+		<dest>D:\qsfile\zqqs\nq\</dest><!--目标路径-->
+		<flag></flag><!--标志文件-->
+		<pattern></pattern><!--拷贝的文件-->
+		<nocopy></nocopy><!--不要拷贝的文件-->
+		<candelay>true</candelay><!--是否可以延迟，默认不能。给自动化判断-->
 	</file_source>
 	<file_source>
 		<name>上交所</name>
@@ -14,6 +16,7 @@
 		<dest>D:\qsfile\zqqs\sh\</dest>
 		<flag></flag>
 		<pattern></pattern>
+		<candelay>true</candelay>
 	</file_source>
 	<file_source enable="true">
 		<name>中登上海</name>
@@ -22,6 +25,7 @@
 		<flag>fsbz_a.mdd;fsbz_arjq.mdd;fsbz_b.mdd;fsbz_brjq.mdd;fsbz_dz.mdd;fsbz_op.mdd;fsbz_hk.mdd;fsbz_a2.mdd;fsbz_b2.mdd;fsbz_hkrjq.mdd</flag>
 		<pattern>*.mdd</pattern>
 		<nocopy>fsbz_*.mdd</nocopy>
+		<candelay>true</candelay>
 	</file_source>
 	<file_source>
 		<name>中登深圳</name>
@@ -29,6 +33,7 @@
 		<dest>D:\qsfile\zqqs\sz\</dest>
 		<flag>END.OK;END_SZHK.OK;JS.OK</flag>
 		<pattern>*mmdd.dbf</pattern>
+		<candelay>false</candelay>
 	</file_source>
 	<file_source enable="false">
 		<name>股转</name>
@@ -36,6 +41,7 @@
 		<dest>D:\qsfile\zqqs\nq\</dest>
 		<flag></flag>
 		<pattern></pattern>
+		<candelay>true</candelay>
 	</file_source>
 	<file_source>
 		<name>北交所</name>
@@ -43,6 +49,7 @@
 		<dest>D:\qsfile\zqqs\nq\</dest>
 		<flag>END.OK;JS.OK</flag>
 		<pattern>*.DBF</pattern>
+		<candelay>true</candelay>
 	</file_source>
 	<file_source>
 		<name>中登账户</name>
@@ -51,6 +58,7 @@
 		<flag>hhr100033.mdd.bz2;hstgdz100033.mdd.bz2;khtj100033.mdd.bz2;qhzlbgtz_100033.mdd.bz2;syxx100033.mdd.bz2;xmzh100033.mdd.bz2;ymtzl100033.mdd.bz2;ywls100033.mdd.bz2;zhrz100033.mdd.bz2;zjqs100033.mdd.bz2;zqzhzl100033.mdd.bz2</flag>
 		<pattern>hhr100033.mdd.bz2;hstgdz100033.mdd.bz2;khtj100033.mdd.bz2;qhzlbgtz_100033.mdd.bz2;syxx100033.mdd.bz2;xmzh100033.mdd.bz2;ymtzl100033.mdd.bz2;ywls100033.mdd.bz2;zhrz100033.mdd.bz2;zjqs100033.mdd.bz2;zqzhzl100033.mdd.bz2</pattern>
 		<unzip_pattern>*.bz2</unzip_pattern>
+		<candelay>true</candelay>
 	</file_source>
 	<file_source enable="false">
 		<name>TA多金</name>
