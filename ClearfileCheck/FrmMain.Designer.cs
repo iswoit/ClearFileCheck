@@ -52,6 +52,13 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.statusTime = new System.Windows.Forms.ToolStripStatusLabel();
             this.timerCurrentTime = new System.Windows.Forms.Timer(this.components);
+            this.numSpan = new System.Windows.Forms.NumericUpDown();
+            this.label6 = new System.Windows.Forms.Label();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuHelp = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
+            this.label7 = new System.Windows.Forms.Label();
+            this.lbCanClearStart = new System.Windows.Forms.Label();
             this.lvStatus = new ClearfileCheckManager.DoubleBufferListView();
             this.文件源 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -61,13 +68,6 @@
             this.标志到齐 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.拷贝完成 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.检查通过 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.numSpan = new System.Windows.Forms.NumericUpDown();
-            this.label6 = new System.Windows.Forms.Label();
-            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
-            this.menuHelp = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
-            this.label7 = new System.Windows.Forms.Label();
-            this.lbCanClearStart = new System.Windows.Forms.Label();
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numSpan)).BeginInit();
@@ -284,6 +284,84 @@
             this.timerCurrentTime.Interval = 500;
             this.timerCurrentTime.Tick += new System.EventHandler(this.timerCurrentTime_Tick);
             // 
+            // numSpan
+            // 
+            this.numSpan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.numSpan.Location = new System.Drawing.Point(1010, 430);
+            this.numSpan.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.numSpan.Minimum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.numSpan.Name = "numSpan";
+            this.numSpan.Size = new System.Drawing.Size(43, 21);
+            this.numSpan.TabIndex = 27;
+            this.numSpan.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.numSpan.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            // 
+            // label6
+            // 
+            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(939, 433);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(65, 12);
+            this.label6.TabIndex = 28;
+            this.label6.Text = "间隔(秒)：";
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuHelp});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(1108, 25);
+            this.menuStrip1.TabIndex = 29;
+            this.menuStrip1.Text = "menuStrip";
+            // 
+            // menuHelp
+            // 
+            this.menuHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuHelpAbout});
+            this.menuHelp.Name = "menuHelp";
+            this.menuHelp.Size = new System.Drawing.Size(44, 21);
+            this.menuHelp.Text = "帮助";
+            // 
+            // menuHelpAbout
+            // 
+            this.menuHelpAbout.Name = "menuHelpAbout";
+            this.menuHelpAbout.Size = new System.Drawing.Size(109, 22);
+            this.menuHelpAbout.Text = "关于...";
+            // 
+            // label7
+            // 
+            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(709, 509);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(113, 12);
+            this.label7.TabIndex = 30;
+            this.label7.Text = "是否可以开始清算：";
+            // 
+            // lbCanClearStart
+            // 
+            this.lbCanClearStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.lbCanClearStart.AutoSize = true;
+            this.lbCanClearStart.Location = new System.Drawing.Point(828, 509);
+            this.lbCanClearStart.Name = "lbCanClearStart";
+            this.lbCanClearStart.Size = new System.Drawing.Size(23, 12);
+            this.lbCanClearStart.TabIndex = 31;
+            this.lbCanClearStart.Text = "N/A";
+            // 
             // lvStatus
             // 
             this.lvStatus.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
@@ -346,84 +424,6 @@
             // 
             this.检查通过.Text = "检查通过";
             this.检查通过.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            // 
-            // numSpan
-            // 
-            this.numSpan.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.numSpan.Location = new System.Drawing.Point(1010, 430);
-            this.numSpan.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.numSpan.Minimum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.numSpan.Name = "numSpan";
-            this.numSpan.Size = new System.Drawing.Size(43, 21);
-            this.numSpan.TabIndex = 27;
-            this.numSpan.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
-            this.numSpan.Value = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
-            // 
-            // label6
-            // 
-            this.label6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(939, 433);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(65, 12);
-            this.label6.TabIndex = 28;
-            this.label6.Text = "间隔(秒)：";
-            // 
-            // menuStrip1
-            // 
-            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuHelp});
-            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
-            this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1108, 25);
-            this.menuStrip1.TabIndex = 29;
-            this.menuStrip1.Text = "menuStrip";
-            // 
-            // menuHelp
-            // 
-            this.menuHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuHelpAbout});
-            this.menuHelp.Name = "menuHelp";
-            this.menuHelp.Size = new System.Drawing.Size(44, 21);
-            this.menuHelp.Text = "帮助";
-            // 
-            // menuHelpAbout
-            // 
-            this.menuHelpAbout.Name = "menuHelpAbout";
-            this.menuHelpAbout.Size = new System.Drawing.Size(152, 22);
-            this.menuHelpAbout.Text = "关于...";
-            // 
-            // label7
-            // 
-            this.label7.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(709, 509);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(113, 12);
-            this.label7.TabIndex = 30;
-            this.label7.Text = "是否可以开始清算：";
-            // 
-            // lbCanClearStart
-            // 
-            this.lbCanClearStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.lbCanClearStart.AutoSize = true;
-            this.lbCanClearStart.Location = new System.Drawing.Point(828, 509);
-            this.lbCanClearStart.Name = "lbCanClearStart";
-            this.lbCanClearStart.Size = new System.Drawing.Size(17, 12);
-            this.lbCanClearStart.TabIndex = 31;
-            this.lbCanClearStart.Text = "×";
             // 
             // columnHeader3
             // 

@@ -617,7 +617,8 @@ namespace ClearfileCheck
             _manager.NextCheckTime = dtNext;
             lbNextExecuteTime.Text = dtNext.ToString("HH:mm:ss");
 
-            lbCanClearStart.Text = _manager.CanStartClear ? "√" : "×";
+
+            lbCanClearStart.Text = _manager.CanStartClear ? "是" : "否";
 
         }
         #endregion
