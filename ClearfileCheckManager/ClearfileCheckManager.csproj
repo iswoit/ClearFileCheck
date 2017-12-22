@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Manager.cs" />
+    <Compile Include="Model\CheckFilePathTimeout.cs" />
     <Compile Include="Model\ClearFile.cs" />
     <Compile Include="Model\FileSource.cs" />
     <Compile Include="Model\UserState.cs" />

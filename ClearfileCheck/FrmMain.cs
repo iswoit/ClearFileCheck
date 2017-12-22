@@ -86,7 +86,7 @@ namespace ClearfileCheck
                 lvi.SubItems.Add(string.Empty);     // 标志到齐
                 lvi.SubItems.Add(string.Empty);     // 拷贝完成
                 lvi.SubItems.Add(string.Empty);     // 检查通过
-                lvi.SubItems.Add(_manager.FileSourceList[i].CanDelay?"不必":"必须收齐");     // 是否清算必须收齐
+                lvi.SubItems.Add(_manager.FileSourceList[i].CanDelay ? "不必" : "必须收齐");     // 是否清算必须收齐
 
                 lvi.Tag = _manager.FileSourceList[i];
                 lvStatus.Items.Add(lvi);
@@ -229,23 +229,29 @@ namespace ClearfileCheck
                     /* 1.判断规则源路径是否存在
                      * 如果源路径都无法访问，就跳过这条规则
                      */
-
-                    tmpFileSource.Status = FileSourceStatus.尝试访问路径;
-                    bgWorker.ReportProgress(1);
-
-
-
-
-                    if (!Directory.Exists(Util.Filename_Date_Convert(tmpFileSource.OriginPath)))
+                    try
                     {
-                        tmpFileSource.Status = FileSourceStatus.源路径无法访问;
+                        tmpFileSource.Status = FileSourceStatus.尝试访问路径;
+                        bgWorker.ReportProgress(1);
 
-                        //// 日志报警
-                        //UserState us = new UserState(true, string.Format("文件源[{0}]，源路径[{1}]无法访问!", tmpFileSource.Name, Util.Filename_Date_Convert(tmpFileSource.OriginPath)));
-                        tmpFileSource.IsRunning = false;
-                        //bgWorker.ReportProgress(1, us);
+                        CheckFilePathTimeout timeout = new CheckFilePathTimeout(new DoHandler(_manager.IsSourcePathAvailabel)); // 委托
+                        bool isTimeout = timeout.DoWithTimeout(new TimeSpan(0, 0, 0, 10), tmpFileSource.OriginPath);       // 超过10秒失败
+                        bool isAvailable = timeout.bReturn;     // 是否可访问
+                        if (isTimeout == true || isAvailable == false)
+                        {
+                            tmpFileSource.Status = FileSourceStatus.源路径无法访问;
+                            tmpFileSource.IsRunning = false;
 
-                        continue;
+                            bgWorker.ReportProgress(1);
+
+                            continue;
+                        }
+
+                    }
+                    catch (Exception ex)
+                    {
+                        UserState us = new UserState(true, string.Format("文件源[{0}]，源路径[{1}]无法访问!", tmpFileSource.Name, Util.Filename_Date_Convert(tmpFileSource.OriginPath)));
+                        bgWorker.ReportProgress(1, us);
                     }
                     Thread.Sleep(100);
 
@@ -721,6 +727,52 @@ namespace ClearfileCheck
                 MessageBox.Show("请停止任务后再关闭程序，以防解压文件出现损坏！");
                 e.Cancel = true;
             }
+        }
+
+
+        /// <summary>
+        /// 清空目标文件目录
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void menuFuncClearDestFolder_Click(object sender, EventArgs e)
+        {
+            DialogResult dr = MessageBox.Show("是否清空所有目标目录的文件?", "提示", MessageBoxButtons.YesNo);
+            if (dr == DialogResult.Yes)
+            {
+                try
+                {
+                    foreach (FileSource tmpFileSource in _manager.FileSourceList)
+                    {
+                        string tmpDestPath = tmpFileSource.DestPath;
+
+                        DirectoryInfo d = new DirectoryInfo(tmpDestPath);
+                        FileSystemInfo[] fileinfo = d.GetFileSystemInfos();  //返回目录中所有文件和子目录
+                        foreach (FileSystemInfo i in fileinfo)
+                        {
+                            if (i is DirectoryInfo)            //判断是否文件夹
+                            {
+                                DirectoryInfo subdir = new DirectoryInfo(i.FullName);
+                                subdir.Delete(true);          //删除子目录和文件
+                            }
+                            else
+                            {
+                                File.Delete(i.FullName);      //删除指定文件
+                            }
+                        }
+
+                    }
+
+                    MessageBox.Show("清空完成");
+
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(string.Format("清空失败：{0}", ex.Message));
+                }
+
+            }
+
         }
     }
 }

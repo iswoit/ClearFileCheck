@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="GBK"?>
 <sources>
 	<!--配置-->
-	<file_source enable="false">
+	<file_source enable="true">
 		<name>股转</name><!--名称-->
 		<source>\\10.32.108.37\d$\nq\</source><!--源路径-->
 		<dest>D:\qsfile\zqqs\nq\</dest><!--目标路径-->
@@ -35,7 +35,7 @@
 		<pattern>*mmdd.dbf</pattern>
 		<candelay>false</candelay>
 	</file_source>
-	<file_source enable="false">
+	<file_source enable="true">
 		<name>股转</name>
 		<source>?</source>
 		<dest>D:\qsfile\zqqs\nq\</dest>

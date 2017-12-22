@@ -3,7 +3,7 @@
 	<!--配置-->
 	<file_source>
 		<name>证券日终_上海_Eztrans</name><!--名称-->
-		<source>\\10.32.0.133\dd\EzTrans_Files\YYYYMMDD\</source><!--源路径-->
+		<source>\\10.32.0.133\dd\rptfile\YYYYMMDD\</source><!--源路径-->
 		<dest>D:\qsfile\zqqs\sh\</dest><!--目标路径-->
 		<flag></flag><!--标志文件-->
 		<pattern></pattern><!--拷贝的文件-->
@@ -44,7 +44,7 @@
 	<file_source>
 		<name>证券日终_深圳_FxTerm基金盘后</name>
 		<source>\\10.35.0.38\e$\HFXN\QSK\jjph\</source>
-		<dest>D:\qsfile\zqqs\sz\</dest>
+		<dest>D:\qsfile\zqqs\sb\</dest>
 		<flag>SCD_98_671_yyyymmdd_HB.DBF</flag>
 		<pattern>SCD_98_671_yyyymmdd_HB.DBF</pattern>
 		<nocopy></nocopy>
@@ -57,7 +57,7 @@
 		<pattern>evotereport_yyyymmdd.csv</pattern>
 		<nocopy></nocopy>
 	</file_source>
-	<file_source>
+	<file_source enable="true">
 		<name>证券日终_特转AB_NQHB</name>
 		<source>\\10.32.21.51\d$\VSAT\NQJY\</source>
 		<dest>D:\qsfile\zqqs\nq\</dest>
@@ -115,7 +115,7 @@
 	</file_source>
 	<file_source>
 		<name>期权日终_上海_EzTrans</name><!--名称-->
-		<source>\\10.32.0.133\dd\EzTrans_Files\YYYYMMDD\</source><!--源路径-->
+		<source>\\10.32.0.133\dd\rptfile\YYYYMMDD\</source><!--源路径-->
 		<dest>D:\qsfile\opt\</dest><!--目标路径-->
 		<flag></flag><!--标志文件-->
 		<pattern>OGH*.zip</pattern><!--拷贝的文件-->
@@ -146,12 +146,19 @@
 		<nocopy></nocopy>
 	</file_source>
 	<file_source>
-		<name>转融通</name>
+		<name>转融通_证金</name>
 		<source>\\10.35.0.112\d$\转融通\证金recv\</source>
 		<dest>D:\qsfile\zrt\</dest>
 		<flag>ZRTQX.dbf;ZRTBDQXFL.dbf</flag>
 		<pattern>000042_*.dbf</pattern>
 		<nocopy></nocopy>
 	</file_source>
-
+	<file_source>
+		<name>转融通_中登</name>
+		<source>\\10.35.0.112\d$\转融通\中登recv\</source>
+		<dest>D:\qsfile\zrt\</dest>
+		<flag>dbpjsmx100033.dbf;dbzqqyfa.dbf;dbpzjye100033.dbf;dbpzqye100033.dbf</flag>
+		<pattern>dbpjsmx100033.dbf;dbzqqyfa.dbf;dbpzjye100033.dbf;dbpzqye100033.dbf</pattern>
+		<nocopy></nocopy>
+	</file_source>
 </sources>

@@ -135,6 +135,25 @@ namespace ClearfileCheckManager
         }
 
 
+
+        /// <summary>
+        /// 源目录是否可访问
+        /// </summary>
+        /// <param name="strPath"></param>
+        /// <returns></returns>
+        public bool IsSourcePathAvailabel(string strPath)
+        {
+            if (Directory.Exists(Util.Filename_Date_Convert(strPath)))
+            {
+                return true;
+            }
+            else
+                return false;
+        }
+
+
+
+
         /// <summary>
         /// 是否可以开始清算。enable=true的，所有checkpass=true，而且是
         /// </summary>
