@@ -55,6 +55,8 @@
             this.numSpan = new System.Windows.Forms.NumericUpDown();
             this.label6 = new System.Windows.Forms.Label();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.menuFunc = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuFuncClearDestFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.menuHelp = new System.Windows.Forms.ToolStripMenuItem();
             this.menuHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.label7 = new System.Windows.Forms.Label();
@@ -69,8 +71,6 @@
             this.拷贝完成 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.检查通过 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader3 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.menuFunc = new System.Windows.Forms.ToolStripMenuItem();
-            this.menuFuncClearDestFolder = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numSpan)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -331,6 +331,22 @@
             this.menuStrip1.TabIndex = 29;
             this.menuStrip1.Text = "menuStrip";
             // 
+            // menuFunc
+            // 
+            this.menuFunc.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuFuncClearDestFolder});
+            this.menuFunc.Name = "menuFunc";
+            this.menuFunc.Size = new System.Drawing.Size(44, 21);
+            this.menuFunc.Text = "功能";
+            // 
+            // menuFuncClearDestFolder
+            // 
+            this.menuFuncClearDestFolder.Enabled = false;
+            this.menuFuncClearDestFolder.Name = "menuFuncClearDestFolder";
+            this.menuFuncClearDestFolder.Size = new System.Drawing.Size(172, 22);
+            this.menuFuncClearDestFolder.Text = "清空目标路径文件";
+            this.menuFuncClearDestFolder.Click += new System.EventHandler(this.menuFuncClearDestFolder_Click);
+            // 
             // menuHelp
             // 
             this.menuHelp.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -342,7 +358,7 @@
             // menuHelpAbout
             // 
             this.menuHelpAbout.Name = "menuHelpAbout";
-            this.menuHelpAbout.Size = new System.Drawing.Size(152, 22);
+            this.menuHelpAbout.Size = new System.Drawing.Size(109, 22);
             this.menuHelpAbout.Text = "关于...";
             // 
             // label7
@@ -433,21 +449,6 @@
             this.columnHeader3.Text = "清算开始必须收齐";
             this.columnHeader3.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.columnHeader3.Width = 110;
-            // 
-            // menuFunc
-            // 
-            this.menuFunc.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.menuFuncClearDestFolder});
-            this.menuFunc.Name = "menuFunc";
-            this.menuFunc.Size = new System.Drawing.Size(44, 21);
-            this.menuFunc.Text = "功能";
-            // 
-            // menuFuncClearDestFolder
-            // 
-            this.menuFuncClearDestFolder.Name = "menuFuncClearDestFolder";
-            this.menuFuncClearDestFolder.Size = new System.Drawing.Size(172, 22);
-            this.menuFuncClearDestFolder.Text = "清空目标路径文件";
-            this.menuFuncClearDestFolder.Click += new System.EventHandler(this.menuFuncClearDestFolder_Click);
             // 
             // FrmMain
             // 

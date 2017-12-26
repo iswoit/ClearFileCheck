@@ -6,3 +6,4 @@ D:\Codes\C#\ClearfileCheck\ClearfileCheck\bin\Debug\ClearfileCheck.pdb
 D:\Codes\C#\ClearfileCheck\ClearfileCheck\bin\Debug\ICSharpCode.SharpZipLib.dll
 D:\Codes\C#\ClearfileCheck\ClearfileCheck\obj\Debug\ClearfileCheck.exe
 D:\Codes\C#\ClearfileCheck\ClearfileCheck\obj\Debug\ClearfileCheck.pdb
+D:\Codes\C#\ClearfileCheck\ClearfileCheck\obj\Debug\ClearfileCheck.csprojResolveAssemblyReference.cache
