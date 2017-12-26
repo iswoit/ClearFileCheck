@@ -40,15 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Manager.cs" />
-    <Compile Include="Model\CheckFilePathTimeout.cs" />
-    <Compile Include="Model\ClearFile.cs" />
-    <Compile Include="Model\FileSource.cs" />
-    <Compile Include="Model\UserState.cs" />
-    <Compile Include="Util\DoubleBufferListView .cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Util\Util.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

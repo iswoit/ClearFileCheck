@@ -4,7 +4,7 @@ using System.Text;
 using System.Xml;
 using System.IO;
 
-namespace ClearfileCheckManager
+namespace ClearfileCheck
 {
     public class Manager
     {

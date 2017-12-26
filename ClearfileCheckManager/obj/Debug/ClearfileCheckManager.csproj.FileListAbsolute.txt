@@ -1,4 +1,0 @@
-D:\Codes\C#\ClearfileCheck\ClearfileCheckManager\bin\Debug\ClearfileCheckManager.dll
-D:\Codes\C#\ClearfileCheck\ClearfileCheckManager\bin\Debug\ClearfileCheckManager.pdb
-D:\Codes\C#\ClearfileCheck\ClearfileCheckManager\obj\Debug\ClearfileCheckManager.dll
-D:\Codes\C#\ClearfileCheck\ClearfileCheckManager\obj\Debug\ClearfileCheckManager.pdb

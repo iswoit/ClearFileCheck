@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 
-namespace ClearfileCheckManager
+namespace ClearfileCheck
 {
     public delegate bool DoHandler(string strPath);
     public class CheckFilePathTimeout

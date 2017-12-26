@@ -59,7 +59,7 @@
             this.menuHelpAbout = new System.Windows.Forms.ToolStripMenuItem();
             this.label7 = new System.Windows.Forms.Label();
             this.lbCanClearStart = new System.Windows.Forms.Label();
-            this.lvStatus = new ClearfileCheckManager.DoubleBufferListView();
+            this.lvStatus = new ClearfileCheck.DoubleBufferListView();
             this.文件源 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader1 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnHeader2 = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
@@ -501,7 +501,7 @@
         private System.Windows.Forms.Label lbStatus;
         private System.Windows.Forms.Label label10;
         private System.Windows.Forms.Label lbLastExecuteTime;
-        private ClearfileCheckManager.DoubleBufferListView lvStatus;
+        private ClearfileCheck.DoubleBufferListView lvStatus;
         private System.Windows.Forms.ColumnHeader 文件源;
         private System.Windows.Forms.ColumnHeader 进度;
         private System.Windows.Forms.ColumnHeader 标志到齐;

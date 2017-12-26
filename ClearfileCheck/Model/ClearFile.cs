@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ClearfileCheckManager
+namespace ClearfileCheck
 {
     public class ClearFile
     {

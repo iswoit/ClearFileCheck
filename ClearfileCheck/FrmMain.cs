@@ -744,6 +744,9 @@ namespace ClearfileCheck
                 {
                     foreach (FileSource tmpFileSource in _manager.FileSourceList)
                     {
+                        if (tmpFileSource.Enable == false)
+                            continue;
+
                         string tmpDestPath = tmpFileSource.DestPath;
 
                         DirectoryInfo d = new DirectoryInfo(tmpDestPath);

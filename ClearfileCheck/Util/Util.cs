@@ -7,7 +7,7 @@ using ICSharpCode.SharpZipLib;
 using ICSharpCode.SharpZipLib.Zip;
 using ICSharpCode.SharpZipLib.BZip2;
 
-namespace ClearfileCheckManager
+namespace ClearfileCheck
 {
     public static class Util
     {

@@ -35,6 +35,9 @@
     <ApplicationIcon>ClearfileCheck.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="ICSharpCode.SharpZipLib">
+      <HintPath>..\ClearfileCheckManager\bin\Debug\ICSharpCode.SharpZipLib.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
@@ -49,8 +52,17 @@
     <Compile Include="FrmMain.Designer.cs">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Manager.cs" />
+    <Compile Include="Model\CheckFilePathTimeout.cs" />
+    <Compile Include="Model\ClearFile.cs" />
+    <Compile Include="Model\FileSource.cs" />
+    <Compile Include="Model\UserState.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Util\DoubleBufferListView .cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Util\Util.cs" />
     <EmbeddedResource Include="FrmMain.resx">
       <DependentUpon>FrmMain.cs</DependentUpon>
     </EmbeddedResource>
@@ -73,12 +85,6 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ClearfileCheckManager\ClearfileCheckManager.csproj">
-      <Project>{42FC5982-2925-4B84-AB26-D1B5B19D6DDD}</Project>
-      <Name>ClearfileCheckManager</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\control_play.png" />
