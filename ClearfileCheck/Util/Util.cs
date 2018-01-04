@@ -9,6 +9,9 @@ using ICSharpCode.SharpZipLib.BZip2;
 
 namespace ClearfileCheck
 {
+    /// <summary>
+    /// 工具类
+    /// </summary>
     public static class Util
     {
         private static char[] arr_mdd_convert;  // mdd格式的字典数组

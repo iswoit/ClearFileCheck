@@ -5,6 +5,9 @@ using System.Windows.Forms;
 
 namespace ClearfileCheck
 {
+    /// <summary>
+    /// 双缓冲ListView
+    /// </summary>
     public class DoubleBufferListView : ListView
     {
         public DoubleBufferListView()
